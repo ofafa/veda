@@ -1,0 +1,29 @@
+<%- include header %>
+<form method="post">
+    <!-- product UID -->
+    <label for="medname">med name</label>
+    <input type="text" id="medname"><br/>
+
+    <!-- position label -->
+    <label for="position">position</label><br/>
+    <form id="position">
+        <input type="radio" name="front" value="front">前櫃<br/>
+        <input type="radio" name="back" value="back">後櫃<br/>
+        <input type="radio" name="stock" value="stock">庫存<br/>
+    </form>
+
+    <label for="row">Row</label>
+    <input type="number" name="row">
+    <label for="col">Column</label>
+    <input type="number" name="col">
+    <label for="index">Index</label>
+    <input type="text" name="index"><br/>
+
+
+    <!-- product meta -->
+    <label for="price">unit price</label>
+    <input type="number" name="price"><br/>
+    <label for="intro">intro</label>
+    <input type="text" name="intro"><br/>
+    <input type="submit" value="save">
+</form>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf8">
+    <title>Blog</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <!-- Latest compiled and minified CSS -->
+
+</head>
+<body>
+<nav>
+    <span><a title="Home" href="/">Home</a></span>
+    <span><a title="Medicine" href="/medicine">Medicine</a></span>
+    <span><a title="CRM" href="/crm">CRM</a></span>
+    <% if(user) { %>
+    <span><a title="Logout" href="/logout">Logout</a></span>
+    <% } else { %>
+    <span><a title="Login" href="/login">Login</a></span>
+    <span><a title="Register" href="/reg">Register</a></span>
+    <% } %>
+    <span><a ></a></span>
+</nav>
+</body>
