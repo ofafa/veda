@@ -5,3 +5,5 @@ var mongoose = require('mongoose');
 var Schema = new mongoose.Schema;
 
 mongoose.connect('http://localhost/vedadb');
+
+module.exports = mongoose;

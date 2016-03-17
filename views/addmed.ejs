@@ -2,28 +2,27 @@
 <form method="post">
     <!-- product UID -->
     <label for="medname">med name</label>
-    <input type="text" id="medname"><br/>
+    <input type="text" id="medname" name="medname"><br/>
 
     <!-- position label -->
     <label for="position">position</label><br/>
-    <form id="position">
-        <input type="radio" name="front" value="front">前櫃<br/>
-        <input type="radio" name="back" value="back">後櫃<br/>
-        <input type="radio" name="stock" value="stock">庫存<br/>
-    </form>
+
+        <input type="radio" name="position" value="front">前櫃<br/>
+        <input type="radio" name="position" value="back">後櫃<br/>
+        <input type="radio" name="position" value="stock">庫存<br/>
 
     <label for="row">Row</label>
-    <input type="number" name="row">
+    <input type="number" id="row" name="row">
     <label for="col">Column</label>
-    <input type="number" name="col">
+    <input type="number" id="col" name="col">
     <label for="index">Index</label>
-    <input type="text" name="index"><br/>
+    <input type="text" id="index" name="index"><br/>
 
 
     <!-- product meta -->
     <label for="price">unit price</label>
-    <input type="number" name="price"><br/>
+    <input type="number" id="price" name="price"><br/>
     <label for="intro">intro</label>
-    <input type="text" name="intro"><br/>
+    <input type="text" id="intro" name="intro"><br/>
     <input type="submit" value="save">
 </form>

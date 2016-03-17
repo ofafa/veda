@@ -13,8 +13,4 @@ router.get('/addmed', function(req, res, next){
     res.render('addmed', {user:'dev'});
 });
 
-router.post('/addmed', function(req, res){
-    //todo: add form data into database
-});
-
 module.exports = router;
