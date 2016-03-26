@@ -27,9 +27,29 @@ router.get('/:name', function(req, res, next){
             console.log('no this medicine ' + req.params.name + ' found');
             return res.redirect('/');
         }
-        console.log(medicine);
-        res.render('medinfo', {user:'dev', name: medicine.name, price: medicine.price});
+        res.render('medinfo', {user:'dev', medicine: medicine});
     })
 });
+
+router.get('/edit/:name', function(req, res, next){
+   Medicine.findOne({name: req.params.name}, function(err, medicine){
+       if(!medicine){
+           console.log('no this medicine ' + req.params.name + ' found');
+           return res.redirect('/');
+       }
+       res.render('editmed', {user:'dev', medicine: medicine});
+   })
+});
+
+router.post('/edit/:name', function(req, res, next){
+    //todo: update the data in database
+    Medicine.update({name:req.params.name}, function(err, medicine){
+        if(!medicine){
+            console.log('no this medicine ' + req.params.name + ' found');
+            return res.redirect('/');
+        }
+
+    })
+})
 
 module.exports = router;

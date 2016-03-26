@@ -1,4 +1,5 @@
 <%- include header %>
 <p>User: <%= user %></p>
-<h3>Name: <%= name %></h3>
-<p>Price: <%= price %></p>
+<h3>Name: <%= medicine.name %></h3>
+<p>Price: <%= medicine.price %></p>
+<a href="/edit/<%= medicine.name %>">Edit</a>
