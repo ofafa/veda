@@ -15,8 +15,9 @@ var medSchema = new Schema({
     created_at:Date,
     updated_at:Date
 
-});
-
-
+}, {timestamps: true});
 var Medicine = mongoose.model('Medicine', medSchema);
+
+
+
 module.exports = Medicine;

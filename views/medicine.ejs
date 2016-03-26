@@ -1,6 +1,9 @@
 <%- include header %>
 <body>
 <p><a href="/medicine/addmed">Add new medicine</a></p>
+<% medicines.forEach(function(medicine, index){ %>
+<p><a href="/medicine/<%= medicine.name %>"><%= medicine.name %></a></p>
+<% }) %>
 <h3>前櫃</h3>
 <h3>後櫃</h3>
 <h3>庫存</h3>
