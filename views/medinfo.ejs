@@ -1,5 +1,32 @@
 <%- include header %>
 <p>User: <%= user %></p>
-<h3>Name: <%= medicine.name %></h3>
-<p>Price: <%= medicine.price %></p>
-<a href="/edit/<%= medicine.name %>">Edit</a>
+<form method="post" action="/medicine/edit/<%= medicine.name %>">
+<p>Name: <input type="text" name="name" value=<%= medicine.name %>></p>
+<p>Price: <input type="number" name="price" value=<%= medicine.price %>></p>
+<p>Position:
+    <% console.log(medicine.position) %>
+    <% if(medicine.position =='front') { %>
+        <input type="radio" name="position" value="front" checked='true'>前櫃
+    <% } else { %>
+        <input type="radio" name="position" value="front">前櫃
+    <% } %>
+    <% if(medicine.position =='back') { %>
+        <input type="radio" name="position" value="back" checked='true'>後櫃
+    <% } else { %>
+        <input type="radio" name="position" value="back">後櫃
+    <% } %>
+    <% if(medicine.position =='stock') { %>
+        <input type="radio" name="position" value="stock" checked='true'>庫存
+    <% } else { %>
+        <input type="radio" name="position" value="stock">庫存
+    <% } %>
+
+
+
+
+<p>Row: <input type="number" name="row" value=<%= medicine.row %>></p>
+<p>Col: <input type="number" name="col" value=<%= medicine.col %>></p>
+<p>Index: <input type="number" name="index" value=<%= medicine.index %>></p>
+<p>Info: <input type="text" name="info" value=<%= medicine.info %>></p>
+<input type="submit" value="Save Changes">
+</form>

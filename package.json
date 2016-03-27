@@ -12,6 +12,20 @@
     "ejs": "~2.3.3",
     "express": "~4.13.1",
     "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "mongoose": "4.4.7",
+    "mongodb": "latest",
+    "regexp-clone": "latest",
+    "sliced": "latest",
+    "mpath": "latest",
+    "ms": "latest",
+    "kareem": "latest",
+    "async": "latest",
+    "hooks-fixed": "latest",
+    "mpromise": "latest",
+    "mquery": "1.8.0",
+    "muri": "latest",
+    "jquery": "latest",
+    "jsdom": "*"
   }
 }

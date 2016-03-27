@@ -1,6 +1,6 @@
 <%- include header %>
 <% medicines.forEach(function(medicine, index){ %>
-<p><%= medicine.name %></p>
+<p><a href='/medicine/medinfo/<%= medicine.name %>'><%= medicine.name %></a></p>
 <p><%= medicine.position %></p>
 <p><%= medicine.row %></p>
 <p><%= medicine.col %></p>
