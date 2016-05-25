@@ -2,12 +2,36 @@
 <body>
 <p><a href="/medicine/addmed">Add new medicine</a></p>
 <h3>前櫃</h3>
+<% var dataTable = []; %>
 <% medicines.forEach(function(medicine, index){ %>
-    <% if (medicine.position=='front') { %>
-        <p><a href="/medicine/<%= medicine.name %>"><%= medicine.name %></a></p>
-    <% } %>
+<% if (medicine.position=='front') { %>
+<% if (!dataTable[medicine.row]){ %>
+<%     dataTable[medicine.row] = []; %>
+<%     dataTable[medicine.row][medicine.col] = []; %>
+<%     dataTable[medicine.row][medicine.col][medicine.index] = medicine.name %>
+<% } %>
+<% if(dataTable[medicine.row]){ %>
+<%     if(!dataTable[medicine.row][medicine.col]){ %>
+<%         dataTable[medicine.row][medicine.col] = []; %>
+<%         dataTable[medicine.row][medicine.col][medicine.index] = medicine.name; %>
+<%     } %>
+<%     if(dataTable[medicine.row][medicine.col]){ %>
+<%         dataTable[medicine.row][medicine.col][medicine.index] = medicine.name; %>
+<%     }%>
+<% }%>
+<% } %>
+<% }); %>
 
-<% }) %>
+<table border="1">
+    <% dataTable.forEach(function(col, index){ %>
+    <tr>
+        <%     col.forEach(function(box, index){ %>
+        <td><%= box %></td>
+        <%     }); %>
+    </tr>
+    <% });%>
+
+</table>
 
 
 
@@ -32,40 +56,15 @@
     <% } %>
 <% }); %>
 
-<table>
+<table border="1">
+    <% dataTable.forEach(function(col, index){ %>
     <tr>
-        <td><%= dataTable[1][1] %> | </td>
-        <td><%= dataTable[1][2] %> | </td>
-        <td><%= dataTable[1][3] %> | </td>
-        <td><%= dataTable[1][4] %> | </td>
-        <td><%= dataTable[1][5] %> | </td>
-        <td><%= dataTable[1][6] %> | </td>
-        <td><%= dataTable[1][7] %> | </td>
-        <td><%= dataTable[1][8] %> | </td>
-        <td><%= dataTable[1][9] %> | </td>
+    <%     col.reverse().forEach(function(box, index){ %>
+           <td><%= box %></td>
+    <%     }); %>
     </tr>
-    <tr>
-        <td><%= dataTable[2][1] %> | </td>
-        <td><%= dataTable[2][2] %> | </td>
-        <td><%= dataTable[2][3] %> | </td>
-        <td><%= dataTable[2][4] %> | </td>
-        <td><%= dataTable[2][5] %> | </td>
-        <td><%= dataTable[2][6] %> | </td>
-        <td><%= dataTable[2][7] %> | </td>
-        <td><%= dataTable[2][8] %> | </td>
-        <td><%= dataTable[2][9] %> | </td>
-    </tr>
-    <tr>
-        <td><%= dataTable[3][1] %> | </td>
-        <td><%= dataTable[3][2] %> | </td>
-        <td><%= dataTable[3][3] %> | </td>
-        <td><%= dataTable[3][4] %> | </td>
-        <td><%= dataTable[3][5] %> | </td>
-        <td><%= dataTable[3][6] %> | </td>
-        <td><%= dataTable[3][7] %> | </td>
-        <td><%= dataTable[3][8] %> | </td>
-        <td><%= dataTable[3][9] %> | </td>
-    </tr>
+    <% });%>
+
 </table>
 
 <div class="backbox">

@@ -1,8 +1,9 @@
 /**
  * Created by s955281 on 3/17/16.
  */
-var mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost/veda');
+var mongoose = require('./db');
+
+console.log('connection built!')
 var Schema = mongoose.Schema;
 var medSchema = new Schema({
     name: String,
