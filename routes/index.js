@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/search', function(req, res){
     console.log(req.query.keyword);
-    Medicine.find({name:req.query.keyword}, function(err, medicines){
+    Medicine.find({name:new RegExp(req.query.keyword, 'i')}, function(err, medicines){
         if(err){
             console.log('no such medicine');
             return req.redirect('/');

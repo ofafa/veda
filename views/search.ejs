@@ -1,9 +1,13 @@
 <%- include header %>
+<p>搜尋結果：</p>
+<% if (medicines == ""){ %>
+<p>無相似結果</p>
+<% } %>
 <% medicines.forEach(function(medicine, index){ %>
 <p><a href='/medicine/medinfo/<%= medicine.name %>'><%= medicine.name %></a></p>
 <p>位置：<%= medicine.position %></p>
-<p>Row:<%= medicine.row %></p>
 <p>Col:<%= medicine.col %></p>
+<p>Row:<%= medicine.row %></p>
 <p>Index:<%= medicine.index %></p>
 
 <% }) %>
