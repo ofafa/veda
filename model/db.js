@@ -3,7 +3,6 @@
  */
 var config = require('../config/config');
 var mongoose = require('mongoose');
-console.log(config.production.mongodb);
-mongoose.connect(config.production.mongodb);
-console.log('connected!')
+mongoose.connect(process.env.VEDABASE_MLAB);
+console.log('connected!');
 module.exports = mongoose;

@@ -1,29 +1,50 @@
 /**
  * Created by s955281 on 5/9/16.
  */
-var mongoose = require("mongoose");
-
-console.log('connect to database...')
-//Remote db
-mongoose.connect('mongodb://virtue:Meister@ds021711.mlab.com:21711/vedabase');
-//localdb
-//mongoose.connect('mongodb://localhost/veda');
-
-console.log('connection built!')
+var mongoose = require("./db");
+var bcrypt = require("bcrypt-nodejs");
 var Schema = mongoose.Schema;
 var userSchema = new Schema({
-    name: String,
-    password: String,
-    phone: String,
-    email: String,
-    gender: Number,
-    role: String,
-    address: {zip: String, street: String, state: String, country: String},
-    birthday: Date,
-    recipe: {recipe: recipeSchema, timestamp: Date},
-    note: String,
-    created_at:Date,
-    updated_at:Date
+    local:{
+        email: String,
+        password:String
+    },
 
+    facebook:{
+        id:String,
+        token:String,
+        email:String,
+        name:String
+    },
+
+    twitter:{
+        id:String,
+        token:String,
+        displayName:String,
+        username:String
+    },
+
+    profile: {
+        name: String,
+        phone: String,
+        email: String,
+        gender: Number,
+        role: String,
+        address: {zip: String, street: String, state: String, country: String},
+        birthday: Date,
+        recipe: {recipeName: String, timestamp: Date},
+        note: String,
+        created_at:Date,
+        updated_at:Date
+    }
 }, {timestamps: true});
-var User = mongoose.model('User', userSchema);
+
+userSchema.methods.genereteHash = function(password){
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+userSchema.methods.validPassword = function(password){
+    return bcrypt.compareSync(password, this.local.password);
+};
+
+module.exports = mongoose.model('User', userSchema);

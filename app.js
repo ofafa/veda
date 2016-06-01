@@ -1,10 +1,18 @@
+//packages
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
+//passport
+var passport = require("passport");
+var flash = require("connect-flash");
+var secret = require("./config/config").secret;
+
+//routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var medicine = require('./routes/medicines');
@@ -25,6 +33,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//required for passport
+/*
+app.use(session({secret: secret}));
+app.use(passport.initialize());
+app.use(passport.session);
+app.use(flash());
+*/
+
+//set routes
 app.use('/', routes);
 app.use('/users', users);
 app.use('/medicine', medicine);

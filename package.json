@@ -26,6 +26,16 @@
     "mquery": "1.8.0",
     "muri": "latest",
     "jquery": "latest",
-    "jsdom": "*"
+    "jsdom": "*",
+    "express-session":"~1.0.0",
+
+
+    "passport": "~0.1.17",
+    "passport-local":"~0.1.6",
+    "passport-facebook":"~1.0.2",
+    "passport-twitter": "~1.0.2",
+    "connect-flash":"~0.1.1",
+    "bcrypt-nodejs":"latest"
+
   }
 }
