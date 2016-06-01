@@ -10,7 +10,7 @@ var session = require('express-session');
 //passport
 var passport = require("passport");
 var flash = require("connect-flash");
-var secret = require("./config/config").secret;
+var secret = process.env.PASSPORT_SECRET;
 
 //routes
 var routes = require('./routes/index');
