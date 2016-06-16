@@ -9,16 +9,25 @@
 
 </head>
 <body>
-<nav>
-    <span><a title="Home" href="/">Home</a></span>
-    <span><a title="Medicine" href="/medicine">Medicine</a></span>
-    <span><a title="CRM" href="/crm">CRM</a></span>
-    <% if(user) { %>
-    <span><a title="Logout" href="/logout">Logout</a></span>
-    <% } else { %>
-    <span><a title="Login" href="/login">Login</a></span>
-    <span><a title="Register" href="/reg">Register</a></span>
-    <% } %>
-    <span><a ></a></span>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+        <span><a class="navbar-brand" title="Home" href="/">Home</a></span>
+        </div>
+
+        <div class="collapse navbar-collapse">
+        <span><a class="navbar-text navbar-left" title="Medicine" href="/medicine">Medicine</a></span>
+        <span><a class="navbar-text navbar-left" title="CRM" href="/crm">CRM</a></span>
+        <% if(user) { %>
+        <span><a class="navbar-text navbar-right" title="Logout" href="/logout">Logout</a></span>
+        <% } else { %>
+        <p class="navbar-text navbar-right"><a class="navbar-link" title="Login" href="/login">Login</a></p>
+        <% } %>
+        </div>
+    </div>
+
+
 </nav>
+
+
 </body>
