@@ -8,9 +8,11 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 
 //passport
+
 var passport = require("passport");
 var flash = require("connect-flash");
-var secret = process.env.PASSPORT_SECRET;
+require('./config/passport')(passport);
+
 
 //routes
 var routes = require('./routes/index');
@@ -35,12 +37,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //required for passport
-/*
-app.use(session({secret: secret}));
+app.use(session({secret: process.env.PASSPORT_SECRET}));
 app.use(passport.initialize());
-app.use(passport.session);
+app.use(passport.session());
 app.use(flash());
-*/
 
 //set routes
 app.use('/', routes);

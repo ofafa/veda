@@ -1,6 +1,23 @@
-<%- include header %>
+<%- include header.ejs %>
 
 <body>
-<form method="get" action="search" ><input type="text" placeholder="search" name="keyword"><input type="submit" value="search"></form>
+<div class="jumbotron" align="center">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <form action="/search" method="get" >
+                    <div class="search-form-content">
+                        <input class="form-control" type="text" placeholder="輸入您要找的東西" name="keyword">
+                    </div>
+                    <div class="search-form-submit">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">Search</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
+</div>
 </body>

@@ -39,10 +39,14 @@ var userSchema = new Schema({
     }
 }, {timestamps: true});
 
-userSchema.methods.genereteHash = function(password){
+//===Methods===
+
+//Generate hash
+userSchema.methods.generateHash = function(password){
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
+//check if password is valid
 userSchema.methods.validPassword = function(password){
     return bcrypt.compareSync(password, this.local.password);
 };

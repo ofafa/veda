@@ -1,0 +1,25 @@
+<%- include header.ejs %>
+<head>
+    <title>Node authentication</title>
+</head>
+<body>
+    <div class="container">
+
+        <div class="col-sm-6 col-sm-offset-3">
+            <h1><span class="fa fa-lock"></span>Node Authentication</h1>
+            <form action="/login" method="post">
+            <div class="form-group">
+                <p>Login or Signup with:</p>
+                <label>email</label>
+                <input type="text" class="form-control" name="email">
+                <label>password</label>
+                <input type="password" class="form-control" name="password">
+                <button type="submit" class="btn btn-success">Login</button>
+
+                <p>Need an account? Signup here:</p>
+                <a href="/signup" class="btn btn-default"><span class="fa fa-user"></span>Signup</a>
+            </div>
+            </form>
+        </div>
+    </div>
+</body>

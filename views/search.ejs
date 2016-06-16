@@ -1,4 +1,6 @@
-<%- include header %>
+<%- include header.ejs %>
+<p><a href="/">Back</a></p>
+<hr>
 <p>搜尋結果：</p>
 <% if (medicines == ""){ %>
 <p>無相似結果</p>
@@ -9,5 +11,7 @@
 <p>Col:<%= medicine.col %></p>
 <p>Row:<%= medicine.row %></p>
 <p>Index:<%= medicine.index %></p>
-
+<hr>
 <% }) %>
+<hr>
+<p><a href="/">Back</a></p>
