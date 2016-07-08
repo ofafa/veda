@@ -3,6 +3,7 @@ var router = express.Router();
 var Medicine = require('../model/medicine');
 var passport = require('passport');
 
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', { user: req.user });
@@ -28,7 +29,6 @@ router.get('/signup', function(req, res){
     res.render('signup', {user:req.user});
 });
 
-//TODO:req.user is empty now
 router.get('/profile', isLoggedIn, function(req, res){
     res.render('profile', { user: req.user });
 });

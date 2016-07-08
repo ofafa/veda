@@ -84,11 +84,11 @@ module.exports = function(passport){
                 if(err) return done(err);
                 //if user found, log them in
                 if(user){
-                    console.log(profile);
+                    //console.log(profile);
                     return done(null, user);
                 } else {
                     var newUser = new User();
-                    console.log(profile);
+                    //console.log(profile);
                     newUser.facebook.id = profile.id;
                     newUser.facebook.token  = token;
                     newUser.facebook.name = profile.displayName;
@@ -96,7 +96,6 @@ module.exports = function(passport){
                     //save user to db
                     newUser.save(function(err){
                         if (err) throw err;
-
                         return done(null, newUser);
                     });
                 }

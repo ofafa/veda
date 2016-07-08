@@ -5,9 +5,11 @@ var express = require('express');
 var router = express.Router();
 
 var Medicine = require('../model/medicine');
+var acl = require('../config/acl');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', acl.checkPermission('medicine', 'view'), function(req, res, next) {
+
     Medicine.find(function(err, medicines){
        if(err){
            return next(err);
@@ -17,11 +19,11 @@ router.get('/', function(req, res, next) {
     //res.render('medicine', {user:'dev'});
 });
 
-router.get('/addmed', function(req, res, next){
+router.get('/addmed', acl.checkPermission('medicine', 'edit'), function(req, res, next){
     res.render('addmed', {user:'dev'});
 });
 
-router.get('/:name', function(req, res, next){
+router.get('/:name', acl.checkPermission('medicine', 'view'), function(req, res, next){
     Medicine.findOne({name:req.params.name}, function(err, medicine){
         if(!medicine){
             console.log('no this medicine ' + req.params.name + ' found');
@@ -31,7 +33,7 @@ router.get('/:name', function(req, res, next){
     })
 });
 
-router.get('/edit/:name', function(req, res, next){
+router.get('/edit/:name', acl.checkPermission('medicine', 'view'), function(req, res, next){
    Medicine.findOne({name: req.params.name}, function(err, medicine){
        if(!medicine){
            console.log('no this medicine ' + req.params.name + ' found');
@@ -41,7 +43,7 @@ router.get('/edit/:name', function(req, res, next){
    })
 });
 
-router.post('/edit/:name', function(req, res, next){
+router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(req, res, next){
     //todo: update the data in database
     var conditions = {
         name: req.params.name,
@@ -68,7 +70,7 @@ router.post('/edit/:name', function(req, res, next){
     });
 });
 
-router.get('/medinfo/:name', function(req, res){
+router.get('/medinfo/:name', acl.checkPermission('medicine', 'view'), function(req, res){
     Medicine.findOne({name: req.params.name}, function(err, medicine){
         if(err) {
             console.log(err);
