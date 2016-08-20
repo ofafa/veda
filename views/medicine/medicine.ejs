@@ -1,4 +1,4 @@
-<%- include header %>
+<%- include ../header %>
 <body>
 <p><a href="/medicine/addmed">Add new medicine</a></p>
 <h3>前櫃</h3>
@@ -26,7 +26,11 @@
     <% dataTable.forEach(function(col, index){ %>
     <tr>
         <%     col.forEach(function(box, index){ %>
-        <td><%= box %></td>
+        <td>
+            <% box.forEach(function(med){ %>
+            <a href="/medicine/<%= med %>"><%= med %></a>
+            <% }) %>
+        </td>
         <%     }); %>
     </tr>
     <% });%>
@@ -59,9 +63,13 @@
 <table border="1">
     <% dataTable.forEach(function(col, index){ %>
     <tr>
-    <%     col.reverse().forEach(function(box, index){ %>
-           <td><%= box %></td>
-    <%     }); %>
+    <%      col.reverse().forEach(function(box, index){ %>
+            <td>
+                <% box.forEach(function(med){ %>
+                <a href="/medicine/<%= med %>"><%= med %></a>
+                <% }) %>
+            </td>
+        <% }); %>
     </tr>
     <% });%>
 
@@ -76,13 +84,30 @@
     </div>
 </div>
 
-<h3>庫存</h3>
-<% medicines.forEach(function(medicine, index){ %>
-<a href='/medicine/medinfo/<%= medicine.name %>'><%= medicine.name %></a>
-    <% if (medicine.position=='stock') { %>
-        <p><a href="/medicine/<%= medicine.name %>"><%= medicine.name %></a></p>
+<h3>成藥</h3>
+<p>
+    <% medicines.forEach(function(medicine, index){ %>
+    <% if (medicine.position=='product') { %>
+    <a href="/medicine/<%= medicine.name %>"><%= medicine.name %></a>
     <% } %>
+    <% }) %>
+</p>
 
+
+<h3>庫存</h3>
+<p>
+<% medicines.forEach(function(medicine, index){ %>
+    <% if (medicine.position=='stock') { %>
+        <a href="/medicine/<%= medicine.name %>"><%= medicine.name %></a>
+    <% } %>
 <% }) %>
+</p>
 
+
+<h3>All</h3>
+<p>
+<% medicines.forEach(function(medicine, index){ %>
+    <a href="/medicine/<%= medicine.name %>"><%= medicine.name %></a>
+<% }) %>
+</p>
 </body>

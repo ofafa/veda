@@ -4,9 +4,10 @@
 var mongoose = require('./db');
 var Schema = mongoose.Schema;
 
+var priceSchema = {price: Number, unit: String, timestamp: Date};
 var medSchema = new Schema({
     name: String,
-    price: Number,
+    prices: [priceSchema],
     position: String,
     row: Number,
     col: Number,

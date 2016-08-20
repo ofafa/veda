@@ -2,11 +2,12 @@ var express = require('express');
 var router = express.Router();
 var Medicine = require('../model/medicine');
 var passport = require('passport');
+var acl = require('../config/acl');
 
-
+//Update price as prices that contains price over time data
 function medicineSchemaUpgrade(){
     console.log('upgrade db schema');
-    Medicine.find({price: {$exists: true} }, function(err, medicines){
+    Medicine.find({price : {$exists: true} }, function(err, medicines){
         if(err) console.log('cannot find target medicine');
         medicines.forEach(function(medicine){
             console.log('upgrade:' + medicine.name);
@@ -17,6 +18,20 @@ function medicineSchemaUpgrade(){
     });
 }
 
+//Add unit to prices
+function medicineSchemaUpgradeV2(){
+    console.log('upgrade db schema');
+    Medicine.find({prices : {$exists: true} }, function(err, medicines){
+        if(err) console.log('cannot find target medicine');
+        medicines.forEach(function(medicine){
+            console.log('upgrade:' + medicine.name);
+            medicine.prices = [{price: medicine.price, unit: 'catty', timestamp: Date.now()}];
+            medicine.save();
+        });
+    });
+}
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
     //medicine schema upgrade
@@ -25,7 +40,7 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.get('/search', function(req, res){
+router.get('/search', acl.checkPermission('medicine', 'view'), function(req, res){
     console.log(req.query.keyword);
     Medicine.find({name:new RegExp(req.query.keyword, 'i')}, function(err, medicines){
         if(err){

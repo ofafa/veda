@@ -1,8 +1,8 @@
-<%- include header %>
+<%- include ../header %>
 <p>User: <%= user %></p>
 <form method="post" action="/medicine/edit/<%= medicine.name %>">
 <p>Name: <input type="text" name="name" value=<%= medicine.name %>></p>
-<p>Price: <input type="number" name="price" value=<%= medicine.price %>></p>
+<p>Latest Price: <input type="number" name="price" value=<%= medicine.prices[medicine.prices.length-1].price %>></p>
 <p>Position:
     <% console.log(medicine.position) %>
     <% if(medicine.position =='front') { %>
@@ -14,6 +14,11 @@
         <input type="radio" name="position" value="back" checked='true'>後櫃
     <% } else { %>
         <input type="radio" name="position" value="back">後櫃
+    <% } %>
+    <% if(medicine.position =='product') { %>
+        <input type="radio" name="position" value="product" checked='true'>成藥
+    <% } else { %>
+        <input type="radio" name="position" value="product">成藥
     <% } %>
     <% if(medicine.position =='stock') { %>
         <input type="radio" name="position" value="stock" checked='true'>庫存

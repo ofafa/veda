@@ -14,7 +14,7 @@ router.post('/', function(req, res){
 
     var newMed = new Medicine({
         name: req.body['medname'],
-        price: req.body['price'],
+        prices: [{price: req.body['price'],timestamp: Date.now()}],
         position: req.body['position'],
         row: req.body['row'],
         col: req.body['col'],

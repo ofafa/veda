@@ -14,13 +14,13 @@ router.get('/', acl.checkPermission('medicine', 'view'), function(req, res, next
        if(err){
            return next(err);
        }
-       res.render('medicine', {user:'dev', medicines: medicines});
+       res.render('medicine/medicine', {user:'dev', medicines: medicines});
     });
     //res.render('medicine', {user:'dev'});
 });
 
 router.get('/addmed', acl.checkPermission('medicine', 'edit'), function(req, res, next){
-    res.render('addmed', {user:'dev'});
+    res.render('medicine/addmed', {user:'dev'});
 });
 
 router.get('/:name', acl.checkPermission('medicine', 'view'), function(req, res, next){
@@ -29,7 +29,7 @@ router.get('/:name', acl.checkPermission('medicine', 'view'), function(req, res,
             console.log('no this medicine ' + req.params.name + ' found');
             return res.redirect('/');
         }
-        res.render('medinfo', {user:'dev', medicine: medicine});
+        res.render('medicine/medinfo', {user:'dev', medicine: medicine});
     })
 });
 
@@ -49,7 +49,7 @@ router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(re
         name: req.params.name,
         }, update = {$set:{
         name: req.body['name'],
-        price: req.body['price'],
+        prices: [{price: req.body['price'], timestamp: Date.now()}],
         position: req.body['position'],
         row: req.body['row'],
         col: req.body['col'],

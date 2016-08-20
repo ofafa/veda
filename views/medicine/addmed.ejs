@@ -1,7 +1,7 @@
-<%- include header %>
+<%- include ../header %>
 <form method="post">
     <!-- product UID -->
-    <label for="medname">med name</label>
+    <label for="medname">藥名</label>
     <input type="text" id="medname" name="medname"><br/>
 
     <!-- position label -->
@@ -9,7 +9,9 @@
 
         <input type="radio" name="position" value="front">前櫃
         <input type="radio" name="position" value="back">後櫃
-        <input type="radio" name="position" value="stock">庫存<br/>
+        <input type="radio" name="position" value="stock">庫存
+        <input type="radio" name="position" value="product">成藥
+        <br/>
 
     <label for="col">Column</label>
     <input type="number" id="col" name="col"></br>
@@ -20,9 +22,18 @@
 
 
     <!-- product meta -->
-    <label for="price">unit price</label>
-    <input type="number" id="price" name="price"><br/>
-    <label for="intro">intro</label>
+
+    <label for="price">單價</label>
+    <input type="number" id="price" name="price">
+    <select>
+        <option value="catty">斤</option>
+        <option value="tael">兩</option>
+        <option value="unit">個</option>
+        <option value="other">其他</option>
+    </select>
+    <br/>
+    <label for="intro">介紹</label>
     <input type="text" id="intro" name="intro"><br/>
     <input type="submit" value="save">
+    <a class="btn" href="/back">Cancel</a>
 </form>
