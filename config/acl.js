@@ -16,21 +16,21 @@ mongoose.connection.on('connected', function(error){
 });
 
 
-//test
+//test ACL
 function initPermissions(err){
     acl.allow('guest', ['medicine', 'users'], ['view']);
     acl.allow('admin', ['medicine', 'users'], ['view', 'edit']);
 }
 
-
+//test ACL
 function initRoles(err){
-    acl.addUserRoles('5760292235f1dcf9390d9803', 'guest', function(err){
+    acl.addUserRoles(process.env.GUEST_ID, 'guest', function(err){
         if(err) {
             console.log(err);
             return err;
         }
     });
-    acl.addUserRoles('576181eb97c977cd3e62975b', 'admin');
+    acl.addUserRoles(process.env.ADMIN_ID, 'admin');
 
 }
 
