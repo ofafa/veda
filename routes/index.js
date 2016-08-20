@@ -32,6 +32,19 @@ function medicineSchemaUpgradeV2(){
 }
 
 
+function medicineSchemaUpgrade(){
+    console.log('upgrade db schema');
+    Medicine.find({price: {$exists: true} }, function(err, medicines){
+        if(err) console.log('cannot find target medicine');
+        medicines.forEach(function(medicine){
+            console.log('upgrade:' + medicine.name);
+            medicine.prices = [{price: 0, timestamp: Date.now()}];
+            medicine.set('price', undefined, {strict: false});
+            medicine.save();
+        });
+    });
+}
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
     //medicine schema upgrade
