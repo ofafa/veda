@@ -28,7 +28,7 @@
     "jquery": "latest",
     "jsdom": "*",
     "express-session":"~1.0.0",
-
+    "acl": "0.4.9",
 
     "passport": "~0.1.17",
     "passport-local":"~0.1.6",
@@ -36,6 +36,7 @@
     "passport-twitter": "~1.0.2",
     "connect-flash":"~0.1.1",
     "bcrypt-nodejs":"latest"
+
 
   }
 }
