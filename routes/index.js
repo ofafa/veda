@@ -4,6 +4,7 @@ var Medicine = require('../model/medicine');
 var passport = require('passport');
 var acl = require('../config/acl');
 
+/*
 //Update price as prices that contains price over time data
 function medicineSchemaUpgrade(){
     console.log('upgrade db schema');
@@ -44,11 +45,13 @@ function medicineSchemaUpgrade(){
         });
     });
 }
+*/
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
     //medicine schema upgrade
-    medicineSchemaUpgrade();
+    //medicineSchemaUpgrade();
     res.render('index', { user: req.user });
 });
 
@@ -68,9 +71,7 @@ router.get('/login', function(req, res){
     res.render('login', {user:req.user});
 });
 
-router.get('/signup', function(req, res){
-    res.render('signup', {user:req.user});
-});
+
 
 router.get('/profile', isLoggedIn, function(req, res){
     res.render('profile', { user: req.user });
@@ -83,24 +84,6 @@ router.post('/login', passport.authenticate('local-login', {
     failureFlash: true
 }));
 
-//Local signup
-router.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/profile',
-    failureRedirect: '/signup',
-    failureFlash: true
-}));
-
-//Facebook login
-router.get('/auth/facebook', passport.authenticate('facebook-login', {
-    scope: ['email']
-}));
-
-
-//Facebook Authenticate
-router.get('/auth/facebook/callback', passport.authenticate('facebook-login', {
-    successRedirect: '/profile',
-    failureRedirect: '/'
-}));
 
 
 //Logout

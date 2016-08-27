@@ -44,7 +44,7 @@ router.get('/edit/:name', acl.checkPermission('medicine', 'view'), function(req,
 });
 
 router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(req, res, next){
-    //todo: update the data in database
+
     var conditions = {
         name: req.params.name,
         }, update = {$set:{

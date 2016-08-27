@@ -5,7 +5,11 @@
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 
-var User = require('../model/user');
+var User = require('../model/user').user;
+var TempUser = require('../model/user').tempUser;
+
+var Mailer = require('../config/mailer');
+
 
 module.exports = function(passport){
     //serialize user for the session
@@ -32,19 +36,26 @@ module.exports = function(passport){
                 if(err)
                     return done(err);
                 if(user){
+                    console.log('The email is already taken!');
                     return done(null, false, req.flash('signupMessage', 'This email is already taken.'))
                 } else {
-                    //create user if not occupied
-                    var newUser = new User();
-                    newUser.local.email = email;
-                    newUser.local.password = newUser.generateHash(password);
+                    //create a tempUser if not occupied
+                    var newTempUser = new TempUser();
+                    newTempUser.email = email;
+                    newTempUser.password = newTempUser.generateHash(password);
+                    newTempUser.generateToken(function(token){
+                        newTempUser.token = token;
+                        newTempUser.save(function(err){
+                            if(err){
+                                throw err;
+                            }
+                            Mailer(newTempUser.email, newTempUser.token);
+                            req.flash('Verification email sent to your inbox');
+                            return done(null, newTempUser);
+                        });
 
-                    newUser.save(function(err){
-                        if(err){
-                            throw err;
-                        }
-                        return done(null, newUser);
-                    })
+                    });
+
                 }
 
             });
@@ -104,3 +115,4 @@ module.exports = function(passport){
     }));
 
 };
+
