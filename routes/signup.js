@@ -43,7 +43,7 @@ router.get('/validate', function(req, res){
 
         }
     });
-    
+
 });
 
 //Facebook signup

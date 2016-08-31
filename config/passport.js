@@ -8,8 +8,8 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var User = require('../model/user').user;
 var TempUser = require('../model/user').tempUser;
 
-var Mailer = require('../config/mailer');
-
+//var Mailer = require('../config/mailer');
+var sendgrid = require('../routes/sendgrid');
 
 module.exports = function(passport){
     //serialize user for the session
@@ -49,7 +49,9 @@ module.exports = function(passport){
                             if(err){
                                 throw err;
                             }
-                            Mailer(newTempUser.email, newTempUser.token);
+                            sendgrid(newTempUser.email, newTempUser.token, function(callback){
+                                console.log(callback);
+                            });
                             req.flash('Verification email sent to your inbox');
                             return done(null, newTempUser);
                         });

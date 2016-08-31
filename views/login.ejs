@@ -9,13 +9,14 @@
             <h1><span class="fa fa-lock"></span>Node Authentication</h1>
             <form action="/login" method="post">
             <div class="form-group">
-                <p>Login or Signup with:</p>
+                <p>Login:</p>
                 <label>email</label>
                 <input type="text" class="form-control" name="email">
                 <label>password</label>
                 <input type="password" class="form-control" name="password">
                 <button type="submit" class="btn btn-success">Login</button>
-
+                Or login with Facebook:
+                <a href="/signup/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
                 <p>Need an account? Signup here:</p>
                 <a href="/signup" class="btn btn-default"><span class="fa fa-user"></span>Signup</a>
             </div>
