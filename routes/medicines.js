@@ -20,7 +20,7 @@ router.get('/', acl.checkPermission('medicine', 'view'), function(req, res, next
 });
 
 router.get('/addmed', acl.checkPermission('medicine', 'edit'), function(req, res, next){
-    res.render('medicine/addmed', {user:'dev'});
+    res.render('medicine/addmed', {user:'dev', today: new Date().toISOString().substring(0, 10)});
 });
 
 router.get('/:name', acl.checkPermission('medicine', 'view'), function(req, res, next){
@@ -29,7 +29,8 @@ router.get('/:name', acl.checkPermission('medicine', 'view'), function(req, res,
             console.log('no this medicine ' + req.params.name + ' found');
             return res.redirect('/');
         }
-        res.render('medicine/medinfo', {user:'dev', medicine: medicine});
+        console.log(new Date().toISOString().substring(0, 10));
+        res.render('medicine/medinfo', {user:'dev', medicine: medicine, today: new Date().toISOString().substring(0, 10)});
     })
 });
 
@@ -49,7 +50,7 @@ router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(re
         name: req.params.name,
         }, update = {$set:{
         name: req.body['name'],
-        prices: [{price: req.body['price'], timestamp: Date.now()}],
+        prices: {$addToSet:{price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']}},
         position: req.body['position'],
         row: req.body['row'],
         col: req.body['col'],
@@ -70,15 +71,36 @@ router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(re
     });
 });
 
-router.get('/medinfo/:name', acl.checkPermission('medicine', 'view'), function(req, res){
-    Medicine.findOne({name: req.params.name}, function(err, medicine){
-        if(err) {
-            console.log(err);
-            return callback(err);
-        }
-        res.render('medinfo', {user:'dev', medicine: medicine});
+
+
+
+//Create new medicine
+router.get('/addmed', function(req, res){
+    res.render('addmed', {user:'dev'});
+});
+
+router.post('/addmed', function(req, res){
+
+    var newMed = new Medicine({
+        name: req.body['medname'],
+        prices: [{price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']}],
+        position: req.body['position'],
+        row: req.body['row'],
+        col: req.body['col'],
+        index: req.body['index'],
+        info: req.body['intro']
     });
 
+    //todo: get medicine info from website using crawler
+    console.log(newMed);
+
+    newMed.save(function(err){
+        if(err) throw err;
+        console.log("Medicine saved successfully!");
+    });
+
+    res.redirect('/medicine');
 });
+
 
 module.exports = router;

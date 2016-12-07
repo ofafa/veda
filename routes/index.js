@@ -49,18 +49,27 @@ function medicineSchemaUpgrade(){
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
     //medicine schema upgrade
     //medicineSchemaUpgrade();
-    res.render('index', { user: req.user });
+    var medicines = [];
+    Medicine.find({}, 'name -_id', function(err, medicineNames){
+        if(err) console.log(err);
+        medicineNames.forEach(function(medicine){
+            medicines.push(medicine['name']);
+        });
+        //console.log(medicines);
+        res.render('index', { user: 'test', medicines:medicines });
+    });
+
+
 });
 
 
 router.get('/search', acl.checkPermission('medicine', 'view'), function(req, res){
-    console.log(req.query.keyword);
     Medicine.find({name:new RegExp(req.query.keyword, 'i')}, function(err, medicines){
         if(err){
-            console.log('no such medicine');
+            req.flash('err', 'No such medicine!');
             return req.redirect('/');
         }
         res.render('search', {user: req.user, medicines: medicines})

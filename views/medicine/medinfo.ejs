@@ -2,7 +2,17 @@
 <p>User: <%= user %></p>
 <form method="post" action="/medicine/edit/<%= medicine.name %>">
 <p>Name: <input type="text" name="name" value=<%= medicine.name %>></p>
-<p>Latest Price: <input type="number" name="price" value=<%= medicine.prices[medicine.prices.length-1].price %>></p>
+<p>
+    Latest Price: <input type="number" name="price" value=<%= medicine.prices[medicine.prices.length-1].price %>>
+    <select id="unit" name="unit">
+        <option value="catty">斤</option>
+        <option value="tael">兩</option>
+        <option value="piece">個</option>
+        <option value="other">其他</option>
+    </select>
+    價格日期<input type="date" name="date" value="<%= today %>">
+</p>
+
 <p>Position:
     <% console.log(medicine.position) %>
     <% if(medicine.position =='front') { %>
