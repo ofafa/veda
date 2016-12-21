@@ -103,4 +103,27 @@ router.post('/addmed', function(req, res){
 });
 
 
+var fs = require('fs');
+
+router.get('/export/pricedata', acl.checkPermission('medicine', 'edit'), function(req, res){
+
+    var data = [];
+    Medicine.find({'prices.price':{$gt:0}}, function(err, medicines){
+        medicines.forEach(function(medicine){
+            data += medicine.name + ':' + medicine.prices[medicine.prices.length - 1].price + ',';
+        });
+        console.log(data);
+        fs.writeFile(__dirname + '/export.csv', data, function(err){
+            if (err) console.log(err);
+            res.sendFile(__dirname + '/export.csv', function(err){
+                if(err) console.log(err);
+                fs.unlink(__dirname + '/export.csv', function(err){
+                    if(err) console.log(err);
+                })
+            });
+        });
+
+    });
+});
+
 module.exports = router;
