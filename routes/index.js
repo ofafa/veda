@@ -49,6 +49,7 @@ function medicineSchemaUpgrade(){
 
 
 /* GET home page. */
+/* currently switch to external source mode
 router.get('/', function(req, res) {
     //medicine schema upgrade
     //medicineSchemaUpgrade();
@@ -64,7 +65,11 @@ router.get('/', function(req, res) {
 
 
 });
-
+*/
+/* GET home page. (simplified)*/
+router.get('/', function(req, res){
+    res.render('index', {user: req.user});
+});
 
 router.get('/search', acl.checkPermission('medicine', 'view'), function(req, res){
     Medicine.find({name:new RegExp(req.query.keyword, 'i')}, function(err, medicines){

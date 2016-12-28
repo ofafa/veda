@@ -2,12 +2,11 @@
  * Created by s955281 on 6/28/16.
  */
 var acl = require('acl');
+var flash = require("connect-flash");
 var mongoose = require('../model/db');
 
 mongoose.connection.on('connected', function(error){
     if (error) throw error;
-    console.log('connection on!');
-    console.log(mongoose.connection.readyState);
     acl = new acl(new acl.mongodbBackend(mongoose.connection.db, 'acl_'));
 
     initPermissions();
@@ -19,7 +18,8 @@ mongoose.connection.on('connected', function(error){
 //test ACL
 function initPermissions(err){
     acl.allow('guest', ['medicine', 'users'], ['view']);
-    acl.allow('admin', ['medicine', 'users'], ['view', 'edit']);
+    acl.allow('employee', ['medicine', 'users'], ['view']);
+    acl.allow('admin', ['medicine', 'users', 'acl'], ['view', 'edit']);
 }
 
 //test ACL
@@ -42,7 +42,9 @@ acl.checkPermission = function(resource, action){
         if(next){
             middleware = true;
         }
-        if (req.user == null) return res.redirect('/login');
+        if (req.user == null) {
+            return res.redirect('/login');
+        }
         var uid = req.user.id;
 
         //permission check
@@ -50,7 +52,6 @@ acl.checkPermission = function(resource, action){
             // return results in the appropriate way
             switch (middleware){
                 case true:
-                    console.log('case true');
                     if(result){
                         // user has access rights, proceed to allow access to the route
                         next();

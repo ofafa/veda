@@ -35,9 +35,10 @@ router.get('/validate', function(req, res){
             newUser.save(function(err){
                 if(err) {
                     console.log('Error while creating new user from tempUser!');
-                    req.flash(err, 'cannot create user!');
+                    req.flash('err', 'cannot create user!');
                     res.redirect('/');
                 }
+                req.flash('success', 'Your account has been activated!');
                 res.redirect('../profile');
             })
 
@@ -54,7 +55,7 @@ router.get('/auth/facebook', passport.authenticate('facebook-login', {
 
 //Facebook Authenticate
 router.get('/auth/facebook/callback', passport.authenticate('facebook-login', {
-    successRedirect: '/profile',
+    successRedirect: '/',
     failureRedirect: '/'
 }));
 

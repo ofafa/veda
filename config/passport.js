@@ -50,7 +50,10 @@ module.exports = function(passport){
                                 throw err;
                             }
                             sendgrid(newTempUser.email, newTempUser.token, function(callback){
-                                console.log(callback);
+                                if(callback =='401') {
+                                    console.log('fail to send verification mail');
+                                    req.flash('error', 'Server error! Cannot send verification email');
+                                }
                             });
                             req.flash('Verification email sent to your inbox');
                             return done(null, newTempUser);

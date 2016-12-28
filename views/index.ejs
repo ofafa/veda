@@ -7,7 +7,7 @@
             <div class="input-group">
                 <form action="/search" method="get" >
                     <div class="search-form-content" id="keyword">
-                        <input name="keyword" class="typeahead" type="text" placeholder="請輸入要找的東西">
+                        <input name="keyword" class="typeahead form-control" type="text" placeholder="請輸入要找的東西" autocomplete="off">
                     </div>
 
                     <div class="search-form-submit">
@@ -19,17 +19,29 @@
             </div>
         </div>
     </div>
-<p style="display:none" id="medicines">
-    <%= medicines %>
-</p>
+
 </div>
 
-
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 <script type="text/javascript">
+    var test = ['123', 'happy', 'holiday'];
+
+    var medicines = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        local: test,
+        prefetch: '../typedata.json'
+    });
+
+
     $('#keyword .typeahead').typeahead({
-        source: $('#medicines').html().split(',')
+        hint: true,
+        hightlight: false,
+        minlength: 1
+    },{
+        name:'medicines',
+        source: medicines.ttAdapter()
     });
 
 </script>

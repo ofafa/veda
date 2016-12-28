@@ -6,7 +6,7 @@ var router = express.Router();
 
 var Medicine = require('../model/medicine');
 var acl = require('../config/acl');
-
+var util = require('util');
 /* GET users listing. */
 router.get('/', acl.checkPermission('medicine', 'view'), function(req, res, next) {
 
@@ -29,7 +29,6 @@ router.get('/:name', acl.checkPermission('medicine', 'view'), function(req, res,
             console.log('no this medicine ' + req.params.name + ' found');
             return res.redirect('/');
         }
-        console.log(new Date().toISOString().substring(0, 10));
         res.render('medicine/medinfo', {user:'dev', medicine: medicine, today: new Date().toISOString().substring(0, 10)});
     })
 });
@@ -46,29 +45,69 @@ router.get('/edit/:name', acl.checkPermission('medicine', 'view'), function(req,
 
 router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(req, res, next){
 
+    //default condition
+
     var conditions = {
-        name: req.params.name,
+            name: req.params.name
         }, update = {$set:{
-        name: req.body['name'],
-        prices: {$addToSet:{price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']}},
-        position: req.body['position'],
-        row: req.body['row'],
-        col: req.body['col'],
-        index: req.body['index'],
-        info: req.body['info']}},
+            name: req.body['name'],
+            position: req.body['position'],
+            row: req.body['row'],
+            col: req.body['col'],
+            index: req.body['index'],
+            info: req.body['info']}, $addToSet:{prices: {price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']}}},
         options = {multi:false};
 
-    Medicine.update(conditions, update, options, function(err, medicine){
-        if(!medicine){
-            console.log('no this medicine ' + req.params.name + ' found');
+
+    Medicine.findOne({name: req.params.name}, function(err, medicine) {
+        if (!medicine) {
+            console.log('no ' + req.params.name + ' found');
             return res.redirect('/');
         }
-        if(err){
-            return callback(err);
+
+
+        if(util.isArray(medicine.prices[0])) {
+
+            Medicine.update(conditions, update, options, function (err, medicine) {
+                if (!medicine) {
+                    console.log('no this medicine ' + req.params.name + ' found');
+                    return res.redirect('/');
+                }
+                if (err) {
+                    console.log(err);
+                }
+                console.log('medicine ' + req.params.name + ' updated');
+                return res.redirect('/medicine');
+            });
+        } else {
+
+            update = {
+                $set: {
+                    name: req.body['name'],
+                    position: req.body['position'],
+                    prices: [{price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']}],
+                    row: req.body['row'],
+                    col: req.body['col'],
+                    index: req.body['index'],
+                    info: req.body['info']
+                }
+            };
+
+            Medicine.update(conditions, update, options, function (err, medicine) {
+                if (!medicine) {
+                    console.log('no this medicine ' + req.params.name + ' found');
+                    return res.redirect('/');
+                }
+                if (err) {
+                    console.log(err);
+                }
+                console.log('medicine ' + req.params.name + ' updated');
+                return res.redirect('/medicine');
+            });
         }
-        console.log('medicine' + req.param.name + 'updated');
-        return res.redirect('/medicine');
     });
+
+
 });
 
 

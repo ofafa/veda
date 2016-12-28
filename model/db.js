@@ -13,7 +13,7 @@ mongoose.connection.on('error', function(err){
 
 mongoose.connect(process.env.VEDABASE, function(err){
     if(err) throw err;
-    console.log('connected!');
+    console.log('Connection built!');
 });
 
 

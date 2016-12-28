@@ -1,5 +1,4 @@
 var sendgrid = require('sendgrid');
-
 var helper = sendgrid.mail;
 
 function sendVerificationEmail(receiver, token, callback){

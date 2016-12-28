@@ -13,14 +13,15 @@ var passport = require("passport");
 var flash = require("connect-flash");
 require('./config/passport')(passport);
 
+//typeahead
+var typeahead = require('./config/typeaheadcfg')();
 
 //routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var medicine = require('./routes/medicines');
-var addmed = require('./routes/addmeds');
 var signup = require('./routes/signup');
-
+var acl = require('./routes/acl');
 var app = express();
 
 // view engine setup
@@ -42,12 +43,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+
+
+
 //set routes
 app.use('/', routes);
 app.use('/users', users);
 app.use('/medicine', medicine);
-app.use('/medicine/addmed', addmed);
 app.use('/signup', signup);
+app.use('/acl', acl);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
