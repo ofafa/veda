@@ -1,0 +1,11 @@
+<%- include header %>
+<h3>User list</h3>
+<div>
+    <table>
+        <th>Name</th><th>Role</th>
+        <% users.forEach(function(user, index){ %>
+        <p><%- user.local.email %><br/></p>
+        <%  }); %>
+    </table>
+
+</div>
