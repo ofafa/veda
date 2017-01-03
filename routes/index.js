@@ -113,4 +113,8 @@ function isLoggedIn(req, res, next){
     res.redirect('/');
 }
 
+router.get('/.well-known/acme-challenge/:id', function(req, res){
+    res.send(process.env.SSL_TOKEN);
+});
+
 module.exports = router;

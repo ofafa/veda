@@ -36,7 +36,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 //required for passport
 app.use(session({secret: process.env.PASSPORT_SECRET}));
 app.use(passport.initialize());

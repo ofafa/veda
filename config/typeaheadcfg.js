@@ -16,7 +16,7 @@ var typeaheadcfg = function(){
             });
             //console.log('write meddata');
             //console.log(medicines);
-            fs.writeFile('./typedata.json', '[' + medicines.toString() + ']', function(err){
+            fs.writeFile('./public/typedata.json', '[' + medicines.toString() + ']', function(err){
                 if(err) console.log(err);
             })
         });
