@@ -29,6 +29,9 @@ router.get('/:name', acl.checkPermission('medicine', 'view'), function(req, res,
             console.log('no this medicine ' + req.params.name + ' found');
             return res.redirect('/');
         }
+        medicine.prices.forEach(function(priceData){
+
+        });
         res.render('medicine/medinfo', {user:'dev', medicine: medicine, today: new Date().toISOString().substring(0, 10)});
     })
 });
@@ -66,7 +69,7 @@ router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(re
         }
 
 
-        if(util.isArray(medicine.prices[0])) {
+        if(util.isArray(medicine.prices)) {
 
             Medicine.update(conditions, update, options, function (err, medicine) {
                 if (!medicine) {
@@ -76,7 +79,7 @@ router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(re
                 if (err) {
                     console.log(err);
                 }
-                console.log('medicine ' + req.params.name + ' updated');
+                console.log('medicine ' + req.params.name + ' updated with new price');
                 return res.redirect('/medicine');
             });
         } else {
