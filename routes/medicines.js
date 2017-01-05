@@ -67,7 +67,23 @@ router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(re
             console.log('no ' + req.params.name + ' found');
             return res.redirect('/');
         }
-
+        console.log(medicine.latest_price.timestamp + ' | ' + req.body['date']);
+        if (typeof(medicine.latest_price.timestamp) ==='undefined' || medicine.latest_price.timestamp < new Date(req.body['date'])){
+            update = {
+                $set: {
+                    name: req.body['name'],
+                    position: req.body['position'],
+                    row: req.body['row'],
+                    col: req.body['col'],
+                    index: req.body['index'],
+                    info: req.body['info'],
+                    latest_price: {price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']}
+                },
+                $addToSet: {
+                    prices: {price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']}
+                }
+            }
+        }
 
         if(util.isArray(medicine.prices)) {
 
@@ -126,6 +142,7 @@ router.post('/addmed', function(req, res){
     var newMed = new Medicine({
         name: req.body['medname'],
         prices: [{price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']}],
+        latest_price: {price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']},
         position: req.body['position'],
         row: req.body['row'],
         col: req.body['col'],

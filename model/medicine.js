@@ -8,6 +8,7 @@ var priceSchema = {price: Number, unit: String, timestamp: Date};
 var medSchema = new Schema({
     name: String,
     prices: [priceSchema],
+    latest_price: priceSchema,
     position: String,
     row: Number,
     col: Number,
