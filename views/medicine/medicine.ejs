@@ -1,5 +1,6 @@
 <%- include ../header %>
 <body>
+<script src="/js/med.js"></script>
 <p><a href="/medicine/addmed">Add new medicine</a></p>
 <p><a href="medicine/export/pricedata">Export data</a></p>
 <h3>前櫃</h3>
@@ -104,11 +105,25 @@
 <% }) %>
 </p>
 
+<script type="text/javascript">
+    function showContent(id, button){
+        if(button.innerHTML == "-") {
+            document.getElementById(id).style.display = 'none';
+            button.innerHTML = "+"
+        }
+        else{
+            document.getElementById(id).style.display = '';
+            button.innerHTML = "-"
+        }
+    }
 
-<h3>All</h3>
-<p>
-<% medicines.forEach(function(medicine, index){ %>
-    <a href="/medicine/<%= medicine.name %>"><%= medicine.name %></a>
-<% }) %>
-</p>
+</script>
+<h3>All</h3><a href="#" onclick="showContent('all_medicine', this)">-</a>
+<div id="all_medicine">
+    <p>
+    <% medicines.forEach(function(medicine, index){ %>
+        <a href="/medicine/<%= medicine.name %>"><%= medicine.name %></a>
+    <% }) %>
+    </p>
+</div>
 </body>
