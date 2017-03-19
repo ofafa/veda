@@ -1,9 +1,0 @@
-<%- include header %>
-<a href="/recipes/add">Add recipe</a>
-<p>
-    <% recipes.forEach(function(recipe, index){  %>
-    <a href="/recipes/<%= recipe.name %>"><%= recipe.name %></a>
-    <% }); %>
-</p>
-
-<%- include footer %>
