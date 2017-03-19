@@ -1,0 +1,12 @@
+<%- include ../header %>
+<body>
+<div id="main">
+    <% compositions.forEach(composition => { %>
+    <a href="/composition/<%- composition.name %>"><h3><%- composition.name %></h3></a>
+    <% }) %>
+</div>
+
+</body>
+
+
+<%- include ../footer %>
