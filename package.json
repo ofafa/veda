@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "node ./bin/www",
-    "build": "NODE_ENV=production webpack -p --config ./webpack.config.js --process"
+    "preinstall": "NODE_ENV=production webpack -p --config ./webpack.config.js --process"
 
   },
   "dependencies": {

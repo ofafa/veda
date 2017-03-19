@@ -5,9 +5,9 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-    entry: path.join('./', 'src','composPage.js'),
+    entry: path.join(__dirname, 'src','composPage.js'),
     output: {
-        path: path.join('./', 'public', 'js'),
+        path: path.join(__dirname, 'public', 'js'),
         filename: 'bundle.js'
     },
     module:{
