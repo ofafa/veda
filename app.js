@@ -22,6 +22,7 @@ var users = require('./routes/users');
 var medicine = require('./routes/medicines');
 var signup = require('./routes/signup');
 var acl = require('./routes/acl');
+const composition = require('./routes/compositions');
 var app = express();
 
 // view engine setup
@@ -51,6 +52,7 @@ app.use('/users', users);
 app.use('/medicine', medicine);
 app.use('/signup', signup);
 app.use('/acl', acl);
+app.use('/composition', composition);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

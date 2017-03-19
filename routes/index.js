@@ -77,7 +77,7 @@ router.get('/search', acl.checkPermission('medicine', 'view'), function(req, res
             req.flash('err', 'No such medicine!');
             return req.redirect('/');
         }
-        res.render('search', {user: req.user, medicines: medicines})
+        res.render('search', {user: req.user, medicines: medicines});
     });
 });
 

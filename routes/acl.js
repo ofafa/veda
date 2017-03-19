@@ -8,20 +8,15 @@ var acl = require('../config/acl');
 var user = require('../model/user');
 
 router.get('/', acl.checkPermission('acl', 'view'), function(req, res){
-    //initialize container
-    var allUser = [];
+
 
     //get the email of local users
-    user.user.find({local:{$exists:true}}, function(err, users){
-        allUser.push(users);
+    user.user.find({$or:[{local:{$exists:true}}, {facebook:{$exists:true}}]}, function(err, users){
+        res.render('acl', {user:'dev', users: users});
     }).select('local.email');
 
-    //get the email of facebook users
-    user.user.find({facebook:{$exists: true}}, function(err, users){
-        allUser.push(users);
-    }).select('facebook.email');
-    console.log(allUser);
-    res.render('acl', {user:'dev', users: allUser});
+
+
 
 });
 
