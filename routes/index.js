@@ -5,6 +5,30 @@ var passport = require('passport');
 var acl = require('../config/acl');
 
 /*
+function medicineSchemaUpgradev3(){
+    "use strict";
+    console.log('add latest price');
+    Medicine.find({prices:{$exists:true}}, (err, medicines) => {
+        if(err) console.log(err);
+
+        medicines.forEach(medicine => {
+            console.log('update:' + medicine.name);
+            let ancient = Number.NEGATIVE_INFINITY;
+            let latest_price = [];
+            medicine.prices.forEach(o =>{
+                if(o.timestamp > ancient){
+                    ancient = o.timestamp;
+                    latest_price = o;
+                }
+            });
+            console.log(latest_price);
+            medicine.set('latest_price', latest_price, {strict:false});
+            medicine.save();
+        });
+    });
+}
+*/
+/*
 //Update price as prices that contains price over time data
 function medicineSchemaUpgrade(){
     console.log('upgrade db schema');
@@ -18,6 +42,8 @@ function medicineSchemaUpgrade(){
         });
     });
 }
+
+
 
 //Add unit to prices
 function medicineSchemaUpgradeV2(){

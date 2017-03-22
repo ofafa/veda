@@ -7,6 +7,7 @@ var router = express.Router();
 var Medicine = require('../model/medicine');
 var acl = require('../config/acl');
 var util = require('util');
+const path = require('path');
 /* GET users listing. */
 router.get('/', acl.checkPermission('medicine', 'view'), function(req, res, next) {
 
@@ -30,9 +31,29 @@ router.get('/:name', acl.checkPermission('medicine', 'view'), function(req, res,
             console.log('no this medicine ' + req.params.name + ' found');
             return res.redirect('/');
         }
-        medicine.prices.forEach(function(priceData){
 
+        //update the latest_price field
+        var latest_price = medicine.prices[0];
+        medicine.prices.forEach(function(priceData){
+            if (priceData.timestamp > latest_price.timestamp) latest_price = priceData;
         });
+        if (typeof(medicine.latest_price.timestamp) ==='undefined' || medicine.latest_price.timestamp < new Date(req.body['date'])) {
+            update = {
+                $set: {
+                    name: req.body['name'],
+                    position: req.body['position'],
+                    row: req.body['row'],
+                    col: req.body['col'],
+                    index: req.body['index'],
+                    info: req.body['info'],
+                    latest_price: {
+                        price: latest_price['price'],
+                        unit: latest_price['unit'],
+                        timestamp: latest_price['timestamp']
+                    }
+                }
+            }
+        }
         res.render('medicine/medinfo', {user:'dev', medicine: medicine, today: new Date().toISOString().substring(0, 10)});
     })
 });
@@ -184,6 +205,24 @@ router.get('/export/pricedata', acl.checkPermission('medicine', 'edit'), functio
         });
 
     });
+});
+
+router.get('/export/typedata', acl.checkPermission('medicine', 'edit'), function(req, res){
+    "use strict";
+    let data = [];
+    Medicine.find((err, medicines)=>{
+        if(err) console.log(err);
+        medicines.forEach(medicine => {
+            data += medicine.name + ',';
+        });
+        fs.writeFile(process.env._ROOTPATH + '/public/typedata.json', JSON.stringify(data), (err) => {
+            if(err) console.log(err);
+            res.sendFile(process.env._ROOTPATH + '/public/typedata.json', function(err){
+                if(err) console.log(err);
+
+            });
+        })
+    })
 });
 
 module.exports = router;

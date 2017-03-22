@@ -3,14 +3,38 @@
 <form method="post" action="/medicine/edit/<%= medicine.name %>">
 <p>Name: <input type="text" name="name" value=<%= medicine.name %>></p>
 <p>
-    Latest Price: <input type="number" name="price" value=<%= medicine.latest_price.price %>>
-    <select id="unit" name="unit" value="<%= medicine.latest_price.unit %>">
-        <option value="catty">斤</option>
-        <option value="tael">兩</option>
-        <option value="piece">個</option>
-        <option value="other">其他</option>
+    <% if(medicine.latest_price == null) { console.log('hello');  %>
+        Latest Price: <input type="number" name="price" value=<%= medicine.latest_price.price %>>
+    <% } else {  console.log('QQ');%>
+        Latest Price: <input type="number" name="price" value=<%= medicine.prices[0].price %>>
+    <% } %>
+    <select id="unit" name="unit">
+        <%if(medicine.latest_price.unit == 'catty') { %>
+            <option value="catty" selected>斤</option>
+        <% }else{ %>
+            <option value="catty">斤</option>
+        <% } %>
+        <%if(medicine.latest_price.unit == 'tael') { %>
+        <option value="tael" selected>兩</option>
+        <% }else{ %>
+            <option value="tael">兩</option>
+        <% } %>
+        <%if(medicine.latest_price.unit == 'mace') { %>
+        <option value="mace" selected>錢</option>
+        <% }else{ %>
+            <option value="mace">錢</option>
+        <% } %>
+        <%if(medicine.latest_price.unit == 'piece') { %>
+        <option value="piece" selected>個</option>
+        <% }else{ %>
+            <option value="piece">個</option>
+        <% } %>
+        <%if(medicine.latest_price.unit == 'other') { %>
+        <option value="other" selected>其他</option>
+        <% }else{ %>
+            <option value="other">其他</option>
+        <% } %>
     </select>
-
     價格日期<input type="date" name="date" value="<%= today %>">
 </p>
     <p>Classified Price:</p>
