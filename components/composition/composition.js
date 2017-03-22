@@ -14,6 +14,27 @@ const getSuggestions = value => {
 };
 
 
+const substringMatcher = function(strs) {
+    return function findMatches(q, cb) {
+        var matches, substrRegex;
+
+        // an array that will be populated with substring matches
+        matches = [];
+
+        // regex used to determine if a string contains the substring `q`
+        substrRegex = new RegExp(q, 'i');
+
+        // iterate through the pool of strings and for any string that
+        // contains the substring `q`, add it to the `matches` array
+        $.each(strs, function(i, str) {
+            if (substrRegex.test(str)) {
+                matches.push(str);
+            }
+        });
+
+        cb(matches);
+    };
+};
 
 
 
@@ -65,31 +86,35 @@ export default class Composition extends React.Component {
         });
     };
 
+    componentDidUpdate(){
+        "use strict";
+        this.state.inputs.map(input => {
+            let ref = input.id + '_name';
+            $(this.refs[ref]).typeahead({
+                    hint: true,
+                    hightlight: false,
+                    minlength: 1
+                },{
+                    name:'medicines',
+                    source: substringMatcher(this.state.typedata)
+                }
+            ).bind('typeahead:select', (e, suggestion) => {
+                    let temp = this.state.inputs;
+                    temp.find(item => item.id === input.id).name = suggestion;
+                    this.setState({inputs:temp});
+                })
+                .bind('typeahead:change', (e, suggestion) => {
+                    let temp = this.state.inputs;
+                    temp.find(item => item.id === input.id).name = suggestion;
+                    this.setState({inputs:temp});
+                });
+        });
+
+
+    }
 
     componentDidMount(){
         "use strict";
-
-        var substringMatcher = function(strs) {
-            return function findMatches(q, cb) {
-                var matches, substrRegex;
-
-                // an array that will be populated with substring matches
-                matches = [];
-
-                // regex used to determine if a string contains the substring `q`
-                substrRegex = new RegExp(q, 'i');
-
-                // iterate through the pool of strings and for any string that
-                // contains the substring `q`, add it to the `matches` array
-                $.each(strs, function(i, str) {
-                    if (substrRegex.test(str)) {
-                        matches.push(str);
-                    }
-                });
-
-                cb(matches);
-            };
-        };
 
 
 
@@ -129,11 +154,6 @@ export default class Composition extends React.Component {
                     });
             });
         });
-
-
-
-
-
 
     }
 
@@ -241,6 +261,7 @@ export default class Composition extends React.Component {
         let id = `item-${this.state.inputs.length}`;
         let newItem = {id:id, name:'', q:0, unit:'mace'};
         this.setState({inputs: this.state.inputs.concat(newItem)});
+
     }
 
     render(){

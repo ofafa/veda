@@ -214,7 +214,7 @@ router.get('/export/typedata', acl.checkPermission('medicine', 'edit'), function
     Medicine.find((err, medicines)=>{
         if(err) console.log(err);
         medicines.forEach(medicine => {
-            data += medicine.name + ',';
+            data.push(medicine.name);
         });
         fs.writeFile(process.env._ROOTPATH + '/public/typedata.json', JSON.stringify(data), (err) => {
             if(err) console.log(err);
@@ -233,7 +233,7 @@ function generateTypeData(){
     Medicine.find((err, medicines)=>{
         if(err) console.log(err);
         medicines.forEach(medicine => {
-            data += medicine.name + ',';
+            data.push(medicine.name);
         });
         fs.writeFile(process.env._ROOTPATH + '/public/typedata.json', JSON.stringify(data), (err) => {
             if(err) console.log(err);
