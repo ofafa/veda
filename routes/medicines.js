@@ -178,6 +178,7 @@ router.post('/addmed', function(req, res){
     newMed.save(function(err){
         if(err) throw err;
         console.log("Medicine saved successfully!");
+        generateTypeData();
     });
 
     res.redirect('/medicine');
@@ -224,5 +225,22 @@ router.get('/export/typedata', acl.checkPermission('medicine', 'edit'), function
         })
     })
 });
+
+function generateTypeData(){
+    "use strict";
+
+    let data = [];
+    Medicine.find((err, medicines)=>{
+        if(err) console.log(err);
+        medicines.forEach(medicine => {
+            data += medicine.name + ',';
+        });
+        fs.writeFile(process.env._ROOTPATH + '/public/typedata.json', JSON.stringify(data), (err) => {
+            if(err) console.log(err);
+
+        });
+    })
+
+}
 
 module.exports = router;
