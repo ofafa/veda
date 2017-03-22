@@ -85,5 +85,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
+process.env._ROOTPATH = __dirname;
+;
 
 module.exports = app;
