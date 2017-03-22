@@ -86,32 +86,34 @@ export default class Composition extends React.Component {
         });
     };
 
+
     componentDidUpdate(){
         "use strict";
         this.state.inputs.map(input => {
             let ref = input.id + '_name';
-            $(this.refs[ref]).typeahead({
-                    hint: true,
-                    hightlight: false,
-                    minlength: 1
-                },{
-                    name:'medicines',
-                    source: substringMatcher(this.state.typedata)
-                }
-            ).bind('typeahead:select', (e, suggestion) => {
-                    let temp = this.state.inputs;
-                    temp.find(item => item.id === input.id).name = suggestion;
-                    this.setState({inputs:temp});
-                })
-                .bind('typeahead:change', (e, suggestion) => {
-                    let temp = this.state.inputs;
-                    temp.find(item => item.id === input.id).name = suggestion;
-                    this.setState({inputs:temp});
-                });
+            if($(this.refs[ref]).hasClass('tt-input')==false){
+                $(this.refs[ref]).typeahead({
+                        hint: true,
+                        hightlight: false,
+                        minlength: 1
+                    },{
+                        name:'medicines',
+                        source: substringMatcher(this.state.typedata)
+                    }
+                ).bind('typeahead:select', (e, suggestion) => {
+                        let temp = this.state.inputs;
+                        temp.find(item => item.id === input.id).name = suggestion;
+                        this.setState({inputs:temp});
+                    })
+                    .bind('typeahead:change', (e, suggestion) => {
+                        let temp = this.state.inputs;
+                        temp.find(item => item.id === input.id).name = suggestion;
+                        this.setState({inputs:temp});
+                    });
+            }
         });
+    };
 
-
-    }
 
     componentDidMount(){
         "use strict";
