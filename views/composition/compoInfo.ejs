@@ -3,13 +3,13 @@
 <div class="typeahead" style="border: solid;">
     <p style="-webkit-writing-mode:vertical-rl">
     <%composition.ingredients.forEach(item => { %>
-    <span style="-webkit-writing-mode:vertical-rl; font-size:2em"><a href="../medicine/<%- item.name %>"><%- item.name %></a></span>
-    <span style="-webkit-writing-mode:horizontal-tb; font-size:1.5em"><%- item.q %></span>
+    <span style="-webkit-writing-mode:vertical-rl; font-size:4vw"><a href="../medicine/<%- item.name %>"><%- item.name %></a></span>
+    <span style="-webkit-writing-mode:horizontal-tb; font-size:4vw"><%- item.q %></span>
     <% if(item.unit == "mace") { %>
-    <span style="-webkit-writing-mode:vertical-rl; font-size:1em">錢</span>
+    <span style="-webkit-writing-mode:vertical-rl; font-size:2vw">錢</span>
     <% } %>
     <% if(item.unit == "tael") { %>
-    <span style="-webkit-writing-mode:vertical-rl; font-size:1em">兩</span>
+    <span style="-webkit-writing-mode:vertical-rl; font-size:2vw">兩</span>
     <% } %>
 
 
