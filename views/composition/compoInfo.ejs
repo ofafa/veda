@@ -1,12 +1,17 @@
 <%- include ../header %>
-<h3><%- composition.name %></h3>
-<div class="typeahead">
-    <p>
+<p style="font-size:3em"><%- composition.name %></p>
+<div class="typeahead" >
+    <p style="-webkit-writing-mode:vertical-rl">
     <%composition.ingredients.forEach(item => { %>
 
-        <a href="../medicine/<%- item.name %>"><%- item.name %></a>
-        <%- item.q %>
-        <%- item.unit %>
+        <p style="-webkit-writing-mode:vertical-rl; font-size:2em"><a href="../medicine/<%- item.name %>"><%- item.name %></a></p>
+        <p style="-webkit-writing-mode:horizontal-tb"><%- item.q %></p>
+        <% if(item.unit == "mace") { %>
+            <p style="-webkit-writing-mode:vertical-rl; font-size:1em">錢</p>
+        <% } %>
+        <% if(item.unit == "tael") { %>
+            <p style="-webkit-writing-mode:vertical-rl; font-size:1em">兩</p>
+        <% } %>
 
     <% }) %>
     </p>

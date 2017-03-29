@@ -312,6 +312,7 @@ export default class Composition extends React.Component {
                         <input type="date" name="compo_price_date" value={this.state.compo_price_date} noChange={this.handleInputChange}/>
                         <br/>
                         <button className="btn btn-success" type="submit">save</button>
+                        <a href="/composition" class="btn btn-default">Cancel</a>
 
 
 

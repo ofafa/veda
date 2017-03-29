@@ -48,9 +48,8 @@ router.post('/add', acl.checkPermission('medicine', 'edit'), (req, res) => {
     newCompo.save(err => {
         if(err) console.log(err);
     });
-
-    res.redirect('back');
-
+    //using handleRedirect in react instead
+    //res.redirect('back');
 });
 
 

@@ -10,6 +10,7 @@ var util = require('util');
 const path = require('path');
 /* GET users listing. */
 router.get('/', acl.checkPermission('medicine', 'view'), function(req, res, next) {
+    console.log('root:'+ process.env._ROOTPATH)
     Medicine.find(function(err, medicines){
        if(err){
            return next(err);
