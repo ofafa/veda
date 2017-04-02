@@ -196,7 +196,13 @@ export default class Composition extends React.Component {
                     compo_price_date: this.state.compo_price_date
                 })
         });
-        this.reset();
+
+
+        let r = confirm('Add new composition ' + this.state.compo_name + ' successfully. Add more compositions?');
+        if(r)
+            this.reset();
+        else
+            window.location.href = "/composition"
 
 
 
@@ -312,7 +318,6 @@ export default class Composition extends React.Component {
                         <input type="date" name="compo_price_date" value={this.state.compo_price_date} noChange={this.handleInputChange}/>
                         <br/>
                         <button className="btn btn-success" type="submit">save</button>
-                        <a href="/composition" class="btn btn-default">Cancel</a>
 
 
 
@@ -325,7 +330,7 @@ export default class Composition extends React.Component {
                     <br/>
                     <hr/>
 
-                    <a class="btn btn-default" href="/">Cancel</a>
+                    <a class="btn btn-default" href="/composition">Cancel</a>
                 </div>
         );
 
