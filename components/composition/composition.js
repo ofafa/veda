@@ -179,33 +179,44 @@ export default class Composition extends React.Component {
         "use strict";
         e.preventDefault();
 
-        //var data = this.clearEmptyInput(this.state.inputs);
-        $.ajax({
-            type: 'POST',
-            url: '/composition/add',
-            contentType: "application/json",
-            data: JSON.stringify({
-                    compo_name: this.state.compo_name,
-                    items: this.state.inputs,
-                    compo_type: this.state.compo_type,
-                    compo_intro: this.state.compo_intro,
-                    compo_limitation: this.state.compo_limitation,
-                    compo_processing: this.state.compo_processing,
-                    compo_keyword: this.state.compo_keyword,
-                    compo_price: this.state.compo_price,
-                    compo_price_date: this.state.compo_price_date
-                })
+        let ingredients = [];
+        this.state.inputs.map(item => {
+            if (item.name != '' && item.q != 0 && item.q != ''){
+                ingredients.push(item);
+            }
         });
 
+        if(this.state.compo_name != "" && ingredients.length != 0){
+            $.ajax({
+                type: 'POST',
+                url: '/composition/add',
+                contentType: "application/json",
+                data: JSON.stringify({
+                        compo_name: this.state.compo_name,
+                        items: ingredients,
+                        compo_type: this.state.compo_type,
+                        compo_intro: this.state.compo_intro,
+                        compo_limitation: this.state.compo_limitation,
+                        compo_processing: this.state.compo_processing,
+                        compo_keyword: this.state.compo_keyword,
+                        compo_price: this.state.compo_price,
+                        compo_price_date: this.state.compo_price_date
+                    })
+            });
 
-        let r = confirm('Add new composition ' + this.state.compo_name + ' successfully. Add more compositions?');
-        if(r)
-            this.reset();
-        else
-            window.location.href = "/composition"
 
+            let r = confirm('Add new composition ' + this.state.compo_name + ' successfully. Add more compositions?');
+            if(r)
+                this.reset();
+            else
+                window.location.href = "/composition"
 
-
+        }
+        else {
+            let r = confirm('Compo data is incomplete, continue edit?');
+            if(!r)
+                this.reset();
+        }
     };
 
     handleItemChange(id, e){
