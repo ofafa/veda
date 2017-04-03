@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Medicine = require('../model/medicine');
+const Composition = require('../model/composition');
 var passport = require('passport');
 var acl = require('../config/acl');
 
@@ -98,13 +99,31 @@ router.get('/', function(req, res){
 });
 
 router.get('/search', acl.checkPermission('medicine', 'view'), function(req, res){
-    Medicine.find({name:new RegExp(req.query.keyword, 'i')}, function(err, medicines){
+    let results = [];
+    let compositions = [];
+    Medicine.find({name:new RegExp(req.query.keyword, 'i')}, function(err, meds){
         if(err){
             req.flash('err', 'No such medicine!');
-            return req.redirect('/');
+            return res.redirect('/');
         }
-        res.render('search', {user: req.user, medicines: medicines});
-    });
+        results = results.concat(meds);
+
+
+    }).then(function(){
+        let query = new RegExp(req.query.keyword, 'i');
+        Composition.find({$or:[{name: query},{keyword: query}]}, function(err, compos){
+            "use strict";
+            if(err){
+                req.flash('err', 'No such composition!');
+                return res.redirect('/');
+            }
+            compositions = compositions.concat(compos);
+
+        }).then(function(){
+            console.log(results);
+            res.render('search', {user: req.user, medicines: results, compositions: compositions});
+            });
+        });
 });
 
 router.get('/login', function(req, res){
