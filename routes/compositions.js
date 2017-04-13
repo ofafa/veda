@@ -102,7 +102,7 @@ router.post('/edit/:name', acl.checkPermission('medicine', 'edit'), (req, res) =
         processing: req.body['compo_processing'],
         keyword: req.body['compo_keyword']
     }, $addToSet:{
-        prices:[{price: req.body['compo_price'], timestamp: req.body['compo_price_date']}]
+        prices:{price: req.body['compo_price'], timestamp: req.body['compo_price_date']}
     }};
     let options = {multi:false};
     Composition.update(conditions, update, options, (err, composition) => {

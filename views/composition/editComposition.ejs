@@ -126,7 +126,7 @@
         <label>keyword</label>
         <input name="compo_keyword" value="<%- composition.keyword %>"/></br>
         <label>price</label>
-        <input name="compo_price" value="<%- composition.price %>"/>
+        <input name="compo_price" value="<%- composition.prices[composition.prices.length-1].price %>"/>
         <label>price date</label>
         <input type="date" name="compo_price_date" value="<%= today %>">
         </br>
