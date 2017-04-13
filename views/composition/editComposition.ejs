@@ -1,0 +1,143 @@
+<%- include ../header %>
+
+<script type="text/javascript">
+    function addItem() {
+
+        let container = document.getElementById('ingredients');
+        let length = document.getElementById('ingredients_length')
+        let input_name = document.createElement('input');
+        input_name.type = 'text';
+        input_name.name = 'item-' + (length + 1) + '-name';
+        let input_q = document.createElement('input');
+        input_q.type = 'number';
+        input_q.name = 'item-' + (length + 1) + '-q';
+        let input_unit = document.createElement('select');
+        let op1 = document.createElement('option');
+        op1.text = '錢';
+        op1.selected = 'true';
+
+        let op2 = document.createElement('option');
+        op2.text = '兩';
+
+        let op3 = document.createElement('option');
+        op3.text = '斤';
+
+        let op4 = document.createElement('option');
+        op4.text = '公斤';
+
+        let op5 = document.createElement('option');
+        op5.text = '公克';
+
+        let op6 = document.createElement('option');
+        op6.text = '個';
+
+        let linebreak = document.createElement('br');
+
+        input_unit.appendChild(op1);
+        input_unit.appendChild(op2);
+        input_unit.appendChild(op3);
+        input_unit.appendChild(op4);
+        input_unit.appendChild(op5);
+        input_unit.appendChild(op6);
+
+        container.appendChild(input_name);
+        container.appendChild(input_q);
+        container.appendChild(input_unit);
+        container.appendChild(linebreak);
+        length.value = parseInt(length.value) + 1;
+    }
+</script>
+
+<div>
+    <form name="compo_data" method="post" action="/composition/edit/<%- composition.name %>" >
+        <input type="text" name="compo_name" placeholder="compo_name" value=<%- composition.name %> />
+        <label for="type">type</label>
+        <select name="compo_type">
+            <% if(composition.type == 'internal') { %>
+                <option value="internal" selected>internal</option>
+            <% } else { %>
+                <option value="internal">internal</option>
+            <% } %>
+            <% if(composition.type == 'external') { %>
+                <option value="external" selected>external</option>
+            <% } else { %>
+                <option value="external">external</option>
+            <% } %>
+            <% if(composition.type == 'standard') { %>
+                <option value="standard" selected>standard</option>
+            <% } else { %>
+                <option value="standard">standard</option>
+            <% } %>
+            <% if(composition.type == 'other') { %>
+                <option value="other" selected>other</option>
+            <% } else { %>
+                <option value="other">other</option>
+            <% } %>
+
+        </select></br>
+        <div name="ingredients" id="ingredients">
+            <input type="number" name="ingredients_length" id="ingredients_length" hidden value="<%= composition.ingredients.length %>" /><br/>
+            <% composition.ingredients.forEach((item, idx) => {  %>
+            <input name="item-<%= idx %>-name" value="<%- item.name %>"/>
+            <input name="item-<%= idx %>-q" type="number" value="<%- item.q %>"/>
+            <select name="item-<%= idx %>-unit">
+                <% if(item.unit == 'catty') { %>
+                    <option value="catty" selected>斤</option>
+                <% } else {%>
+                    <option value="catty">斤</option>
+                <% } %>
+                <% if(item.unit == 'tael') { %>
+                    <option value="tael" selected>兩</option>
+                <% } else {%>
+                    <option value="tael">兩</option>
+                <% } %>
+                <% if(item.unit == 'piece') { %>
+                    <option value="piece" selected>個</option>
+                <% } else {%>
+                    <option value="piece">個</option>
+                <% } %>
+                <% if(item.unit == 'mace') { %>
+                    <option value="mace" selected>錢</option>
+                <% } else {%>
+                    <option value="mace">錢</option>
+                <% } %>
+                <% if(item.unit == 'g') { %>
+                    <option value="g" selected>g</option>
+                <% } else {%>
+                    <option value="g">g</option>
+                <% } %>
+                <% if(item.unit == 'kg') { %>
+                    <option value="kg" selected>kg</option>
+                <% } else {%>
+                    <option value="kg">kg</option>
+                <% } %>
+            </select>
+            </br>
+            <% }) %>
+        </div>
+        <a class="btn btn-warning" onclick="addItem()">Add ingredient</a></br></br>
+
+        <label>intro</label>
+        <input name="compo_intro" value="<%- composition.intro %>"/></br>
+        <label>limitation</label>
+        <input name="compo_limitation" value="<%- composition.limitation %>"/></br>
+        <label>processing</label>
+        <input name="compo_processing" value="<%- composition.processing %>"/></br>
+        <label>keyword</label>
+        <input name="compo_keyword" value="<%- composition.keyword %>"/></br>
+        <label>price</label>
+        <input name="compo_price" value="<%- composition.price %>"/>
+        <label>price date</label>
+        <input type="date" name="compo_price_date" value="<%= today %>">
+        </br>
+
+        <input type="submit" class="btn btn-success" value="submit"/>
+        <a href="/composition" class="btn btn-cancel">Cancel</a>
+
+    </form>
+
+</div>
+
+
+
+<%- include ../footer %>

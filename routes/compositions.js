@@ -19,7 +19,7 @@ router.get('/', acl.checkPermission('medicine', 'view'), (req, res) => {
 
 router.get('/add', acl.checkPermission('medicine', 'edit'), (req, res) => {
     //add a composition
-    res.render('composition/addComposition', {user:'test'});
+    res.render('composition/addComposition', {user:'dev'});
 });
 
 router.post('/add', acl.checkPermission('medicine', 'edit'), (req, res) => {
@@ -66,6 +66,51 @@ router.get('/:name',acl.checkPermission('medicine', 'view'), (req, res) =>{
         if(!composition)
             return res.redirect('/');
         res.render('composition/compoInfo', {user: 'dev', composition: composition});
+    });
+
+});
+
+router.get('/edit/:name', acl.checkPermission('medicine', 'edit'), (req, res) => {
+    "use strict";
+    Composition.findOne({name: req.params.name}, (err, composition) => {
+        if(!composition)
+            return res.redirect('/');
+        res.render('composition/editComposition', {user:'dev', composition: composition, today: new Date().toISOString().substring(0, 10)});
+    })
+});
+
+router.post('/edit/:name', acl.checkPermission('medicine', 'edit'), (req, res) => {
+    "use strict";
+    let conditions = {name: req.params.name};
+    let ingredients_size = req.body.ingredients_length;
+    let ingredients = [];
+    console.log(ingredients_size);
+    for(let i = 0; i < ingredients_size; i++){
+        if(req.body['item-' + i + 'name'] != '' && req.body['item-' + i + '-q'] != 0){
+            let id = 'item_' + i;
+            let item = {id:id, name:req.body['item-' + i + '-name'], q:req.body['item-' + i + '-q'], unit:req.body['item-' + i + '-unit']};
+            ingredients.push(item);
+        }
+    }
+
+    let update = {$set:{
+        name: req.body['compo_name'],
+        type: req.body['compo_type'],
+        ingredients: ingredients,
+        intro: req.body['compo_intro'],
+        limitation: req.body['compo_limitation'],
+        processing: req.body['compo_processing'],
+        keyword: req.body['compo_keyword']
+    }, $addToSet:{
+        prices:[{price: req.body['compo_price'], timestamp: req.body['compo_price_date']}]
+    }};
+    let options = {multi:false};
+    Composition.update(conditions, update, options, (err, composition) => {
+        if(err || !composition){
+            console.log('error finding the composition');
+            return res.redirect('/composition');
+        }
+        return res.redirect('/composition');
     });
 
 });

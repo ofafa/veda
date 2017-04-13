@@ -1,15 +1,19 @@
 <%- include ../header %>
 <p style="font-size:3em; text-align:center"><%- composition.name %></p>
-<div style="border: solid; height: 80%; width: 90%">
+    <a href="/composition/edit/<%- composition.name %>" class="btn btn-warning">Edit</a>
+    <div style="border: solid; height: 80%; width: 90%">
     <p style="-webkit-writing-mode: vertical-rl; text-align: center">
     <%composition.ingredients.forEach(item => { %>
     <span style="-webkit-writing-mode: vertical-rl; font-size:6vw"><a href="../medicine/<%- item.name %>"><%- item.name %></a></span>
     <span style="-webkit-writing-mode: horizontal-tb; font-size:4vw"><%- item.q %></span>
     <% if(item.unit == "mace") { %>
-    <span style="-webkit-writing-mode: vertical-rl; font-size:4vw">錢 </span>
+    <span style="-webkit-writing-mode: vertical-rl; font-size:4vw">錢    </span>
     <% } %>
     <% if(item.unit == "tael") { %>
-    <span style="-webkit-writing-mode: vertical-rl; font-size:4vw">兩 </span>
+    <span style="-webkit-writing-mode: vertical-rl; font-size:4vw">兩    </span>
+    <% } %>
+    <% if(item.unit == "piece") { %>
+    <span style="-webkit-writing-mode: vertical-rl; font-size:4vw">個    </span>
     <% } %>
 
 

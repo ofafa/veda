@@ -91,7 +91,7 @@ router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(re
             console.log('no ' + req.params.name + ' found');
             return res.redirect('/');
         }
-        console.log(medicine.latest_price.timestamp + ' | ' + req.body['date']);
+
         if (typeof(medicine.latest_price.timestamp) ==='undefined' || medicine.latest_price.timestamp < new Date(req.body['date'])){
             update = {
                 $set: {
