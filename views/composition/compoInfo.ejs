@@ -1,25 +1,31 @@
 <%- include ../header %>
+
 <p style="font-size:3em; text-align:center"><%- composition.name %></p>
-    <a href="/composition/edit/<%- composition.name %>" class="btn btn-warning">Edit</a>
+    <a style="font-size:1.5em" href="/composition/edit/<%- composition.name %>" class="btn btn-warning">Edit</a>
     <div style="border: solid; height: 80%; width: 90%">
-    <p style="-webkit-writing-mode: vertical-rl; text-align: center">
-    <%composition.ingredients.forEach(item => { %>
-    <span style="-webkit-writing-mode: vertical-rl; font-size:6vw"><a href="../medicine/<%- item.name %>"><%- item.name %></a></span>
-    <span style="-webkit-writing-mode: horizontal-tb; font-size:4vw"><%- item.q %></span>
-    <% if(item.unit == "mace") { %>
-    <span style="-webkit-writing-mode: vertical-rl; font-size:4vw">錢    </span>
-    <% } %>
-    <% if(item.unit == "tael") { %>
-    <span style="-webkit-writing-mode: vertical-rl; font-size:4vw">兩    </span>
-    <% } %>
-    <% if(item.unit == "piece") { %>
-    <span style="-webkit-writing-mode: vertical-rl; font-size:4vw">個    </span>
-    <% } %>
+        <% let padding = 20 - composition.ingredients.length %>
+        <p style="-webkit-writing-mode: vertical-rl; text-align: center;padding-left:<%= padding %>em; padding-top:1em; padding-bottom: 1em">
+        <%composition.ingredients.forEach(item => { %>
+            <span>
+                <span style="-webkit-writing-mode: vertical-rl; font-size:4em"><a href="../medicine/<%- item.name %>"><%- item.name %></a></span>
+                <span style="-webkit-writing-mode: horizontal-tb; font-size:3em"><%- item.q %></span>
+                <% if(item.unit == "mace") { %>
+                <span style="-webkit-writing-mode: vertical-rl; font-size:2em">錢&nbsp&nbsp&nbsp</span>
+                <% } %>
+                <% if(item.unit == "tael") { %>
+                <span style="-webkit-writing-mode: vertical-rl; font-size:2em">兩&nbsp&nbsp&nbsp</span>
+                <% } %>
+                <% if(item.unit == "piece") { %>
+                <span style="-webkit-writing-mode: vertical-rl; font-size:2em">個&nbsp&nbsp&nbsp</span>
+                <% } %>
+            </span>
 
+        <% }) %>
+        </p>
 
-    <% }) %>
-    </p>
-</div>
-<a href="/composition">Back</a>
+    </div>
+<p style="font-size: 2em">說明:<%= composition.intro %></p>
+<p style="font-size: 2em">限制:<%= composition.limitation %></p>
+<a class="btn btn-default" style="font-size:1.5em" href="/composition">Back</a>
 
 <%- include ../footer %>
