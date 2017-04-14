@@ -4,7 +4,7 @@
     function addItem() {
 
         let container = document.getElementById('ingredients');
-        let length = document.getElementById('ingredients_length')
+        let length = parseInt(document.getElementById('ingredients_length').value);
         let input_name = document.createElement('input');
         input_name.type = 'text';
         input_name.name = 'item-' + (length + 1) + '-name';
