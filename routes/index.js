@@ -116,8 +116,8 @@ router.get('/search', acl.checkPermission('medicine', 'view'), function(req, res
 
 
         }).then(function(){
-            let query = new RegExp(q, 'i');
-            Composition.find({$or:[{name: q},{keyword: q}]}, function(err, compos){
+
+            Composition.find({$or:[{name: new RegExp(q, 'i')},{keyword: new RegExp(q, 'i')}]}, function(err, compos){
                 "use strict";
                 if(err){
                     req.flash('err', 'No such composition!');
