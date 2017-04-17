@@ -105,7 +105,7 @@ router.get('/search', acl.checkPermission('medicine', 'view'), function(req, res
     let counter = 0;
     query.forEach((q) => {
         "use strict";
-        console.log(q);
+        
         counter += 1;
         Medicine.find({name:new RegExp(q, 'i')}, function(err, meds){
             if(err){
@@ -125,16 +125,16 @@ router.get('/search', acl.checkPermission('medicine', 'view'), function(req, res
                 }
                 compositions = compositions.concat(compos);
 
+            }).then(()=>{
+                if(counter == query.length){
+                    console.log(results);
+                    res.render('search', {
+                        user: req.user,
+                        medicines: results,
+                        compositions: compositions,
+                        query: req.query.keyword });
+                }
             })
-        }).then(()=>{
-            if(counter == query.length){
-                console.log(results);
-                res.render('search', {
-                    user: req.user,
-                    medicines: results,
-                    compositions: compositions,
-                    query: req.query.keyword });
-            }
         })
     })
 
