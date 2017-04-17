@@ -101,29 +101,46 @@ router.get('/', function(req, res){
 router.get('/search', acl.checkPermission('medicine', 'view'), function(req, res){
     let results = [];
     let compositions = [];
-    Medicine.find({name:new RegExp(req.query.keyword, 'i')}, function(err, meds){
-        if(err){
-            req.flash('err', 'No such medicine!');
-            return res.redirect('/');
-        }
-        results = results.concat(meds);
-
-
-    }).then(function(){
-        let query = new RegExp(req.query.keyword, 'i');
-        Composition.find({$or:[{name: query},{keyword: query}]}, function(err, compos){
-            "use strict";
+    let query = req.query.keyword.split(' ');
+    let counter = 0;
+    query.forEach((q) => {
+        "use strict";
+        console.log(q);
+        counter += 1;
+        Medicine.find({name:new RegExp(q, 'i')}, function(err, meds){
             if(err){
-                req.flash('err', 'No such composition!');
+                req.flash('err', 'No such medicine!');
                 return res.redirect('/');
             }
-            compositions = compositions.concat(compos);
+            results = results.concat(meds);
+
 
         }).then(function(){
-            console.log(results);
-            res.render('search', {user: req.user, medicines: results, compositions: compositions});
-            });
-        });
+            let query = new RegExp(q, 'i');
+            Composition.find({$or:[{name: query},{keyword: query}]}, function(err, compos){
+                "use strict";
+                if(err){
+                    req.flash('err', 'No such composition!');
+                    return res.redirect('/');
+                }
+                compositions = compositions.concat(compos);
+
+            })
+        }).then(()=>{
+            if(counter == query.length){
+                console.log(results);
+                res.render('search', {
+                    user: req.user,
+                    medicines: results,
+                    compositions: compositions,
+                    query: req.query.keyword });
+            }
+        })
+    })
+
+
+
+
 });
 
 router.get('/login', function(req, res){
