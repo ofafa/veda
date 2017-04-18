@@ -1,5 +1,8 @@
 <%- include header.ejs %>
-<input value="<%- query %>">
+<form method="get" action="/search">
+    <input name="keyword"  value="<%- query %>"/>
+    <input type="submit" value="search"/>
+</form>
 <hr>
 <p>搜尋結果：</p>
 <% if (medicines.length == 0 && compositions.length == 0){ %>
