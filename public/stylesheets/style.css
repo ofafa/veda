@@ -49,3 +49,7 @@ a {
 .tt-suggestion p {
     margin: 0;
 }
+
+.brief-intro {
+    font-size: 0.5em;
+}

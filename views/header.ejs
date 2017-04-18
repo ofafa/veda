@@ -24,15 +24,23 @@
         <span><a class="navbar-brand" title="Home" href="/">Home</a></span>
         </div>
 
-        <div class="collapse navbar-collapse">
-        <span><a class="navbar-text navbar-left" title="Medicine" href="/medicine">Medicine</a></span>
-        <span><a class="navbar-text navbar-left" title="Composition" href="/composition">Composition</a></span>
-        <% if(user) { %>
-        <span><a class="navbar-text navbar-right" title="Logout" href="/logout">Logout</a></span>
-        <% } else { %>
-        <p class="navbar-text navbar-right"><a class="navbar-link" title="Login" href="/login">Login</a></p>
-        <% } %>
-        </div>
+        <ul class="nav navbar-nav">
+            <li><a title="Medicine" href="/medicine">Medicine</a></li>
+            <li><a title="Composition" href="/composition">Composition</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <% if(user) { %>
+                <% if(user.facebook) { %>
+                    <li><a title="<%= user.facebook.name %>" href="/profile"><%= user.facebook.name %></a></li>
+                    <li><a title="Logout" href="/logout">Logout</a></li>
+                <% } else { %>
+                        <li><a title="Logout" href="/logout">Logout</a></li>
+                <% } %>
+            <% } else { %>
+                <li><a class="navbar-link" title="Login" href="/login">Login</a></li>
+            <% } %>
+        </ul>
+
     </div>
 </nav>
 <!--END OF NAVBAR-->

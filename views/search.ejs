@@ -1,26 +1,28 @@
 <%- include header.ejs %>
 <form method="get" action="/search">
     <input name="keyword"  value="<%- query %>"/>
-    <input type="submit" value="search"/>
+    <input class="btn btn-submit" type="submit" value="search"/>
 </form>
 <hr>
 <p>搜尋結果：</p>
 <% if (medicines.length == 0 && compositions.length == 0){ %>
 <p>無相似結果</p>
 <% } %>
-<% medicines.forEach(function(medicine, index){ %>
+<% medicines.forEach(function(medicine){ %>
 <p><a href='/medicine/<%= medicine.name %>'><%= medicine.name %></a></p>
-<p>位置：<%= medicine.position %></p>
-<p>Col:<%= medicine.col %></p>
-<p>Row:<%= medicine.row %></p>
-<p>Index:<%= medicine.index %></p>
+<p class="brief-intro"><%= medicine.intro %></p>
 <hr>
 <% }) %>
 
 <% compositions.forEach((composition) => { %>
 <p><a href="/composition/<%= composition.name %>"><%= composition.name %></a></p>
-<p>type: <%= composition.type %></p>
+<p class="brief-intro"><%= composition.intro %></p>
+<p class="brief-intro">成分:<% composition.ingredients.forEach((item) => { %>
+    <%= item.name %>
+    <% }) %>
+</p>
+<hr>
 <% }) %>
 
-<hr>
+
 <p><a href="/">Back</a></p>
