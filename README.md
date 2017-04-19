@@ -8,12 +8,5 @@ Ayuveda also provide features for professional users. If you know how to compose
 <br/>
 ![alt tag](https://raw.githubusercontent.com/ofafa/veda/master/public/images/readme/Compose_composition.jpg)
 
-Then the compo can be displayed as those on paper:
-<br/>
-![alt tag](https://raw.githubusercontent.com/ofafa/veda/master/public/images/readme/Composition_display.jpg)
-
-For store operators, Ayuveda also provide medicine management feature for faster search and tracking.
-<br/>
-![alt tag](https://raw.githubusercontent.com/ofafa/veda/master/public/images/readme/Medicine_management.jpg)
 
 More features are coming soon.
