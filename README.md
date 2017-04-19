@@ -1,7 +1,8 @@
 # Ayuveda
-Traditional Chinese Medicine Management and query system
-Ayuveda is a Traditional Chinese Medicine store management application. Within this app, you can:
-1. Keep track of the medicine data in the cabins
-2. Maintain simple CRM data
-3. Build trainning material based on the ACL and medicine knowledgebase
+Ayuveda is a simple, scalable and power Traditional Chinese Medicine search engine based on real usage data and traditional Chinese Medicine theories.
+Just compose your search as using Google, then you can get the related composition or medicine related to the search terms.
+![alt tag](http://ayuveda.herokuapp.com/images/readme/Search_result.jpg)
+
+Ayuveda also provide features for professional users. If you know how to compose the medicines, you can create it easily within the help of typeahead.
+
 
