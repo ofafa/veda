@@ -5,8 +5,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var session = require('express-session');
-
+var expressSession = require('express-session');
+let redisStore = require('connect-redis')(expressSession);
+let url = require('url');
+let redis = require('redis');
 //passport
 
 var passport = require("passport");
@@ -36,11 +38,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+let redis_client = '';
+
+//session management
+if(process.env.REDISTOGO_URL){
+    let rtg = url.parse(process.env.REDISTOGO_URL);
+    redis_client = redis.createClient(rtg.port, rtg.hostname);
+    redis_client.auth(rtg.auth.split(':')[1]);
+}
+else{
+    redis_client = redis.createClient('6379', 'localhost');
+}
 
 //required for passport
-app.use(session({
-  secret: process.env.PASSPORT_SECRET,
-  cookie: {
+app.use(expressSession({
+    store: new redisStore({client:redis_client}),
+    secret:process.env.PASSPORT_SECRET,
+    cookie: {
     maxAge: 72000000
   }}));
 app.use(passport.initialize());
@@ -90,6 +104,6 @@ app.use(function(err, req, res, next) {
 });
 
 process.env._ROOTPATH = __dirname;
-;
+
 
 module.exports = app;
