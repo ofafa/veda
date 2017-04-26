@@ -9,6 +9,7 @@ var medSchema = new Schema({
     name: String,
     prices: [priceSchema],
     latest_price: priceSchema,
+    classified_price: Number,
     position: String,
     row: Number,
     col: Number,

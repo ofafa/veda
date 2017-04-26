@@ -3,7 +3,7 @@
 <form method="post" action="/medicine/edit/<%= medicine.name %>">
 <p>Name: <input type="text" name="name" value=<%= medicine.name %>></p>
 <p>
-    <% if(medicine.latest_price == null) {  %>
+    <% if(medicine.latest_price != null) {  %>
         Latest Price: <input type="number" name="price" value=<%= medicine.latest_price.price %>>
     <% } else {  %>
         Latest Price: <input type="number" name="price" value=<%= medicine.prices[0].price %>>
@@ -37,7 +37,7 @@
     </select>
     價格日期<input type="date" name="date" value="<%= today %>">
 </p>
-    <p>Classified Price:</p>
+    <p>Classified Price:<input type="number" name="classified_price" value=<%= medicine.classified_price? medicine.classified_price:0 %>></p>
 
 <p>Position:
     <% console.log(medicine.position) %>

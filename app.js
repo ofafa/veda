@@ -41,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 let redis_client = '';
 
 //session management
+
 if(process.env.REDISTOGO_URL){
     let rtg = url.parse(process.env.REDISTOGO_URL);
     redis_client = redis.createClient(rtg.port, rtg.hostname);
@@ -55,7 +56,7 @@ app.use(expressSession({
     store: new redisStore({client:redis_client}),
     secret:process.env.PASSPORT_SECRET,
     cookie: {
-    maxAge: 72000000
+    maxAge: process.env.SESSION_LIFE
   }}));
 app.use(passport.initialize());
 app.use(passport.session());

@@ -82,6 +82,7 @@ router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(re
             row: req.body['row'],
             col: req.body['col'],
             index: req.body['index'],
+            classified_price:req.body['classified_price'],
             info: req.body['info']}, $addToSet:{prices: {price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']}}},
         options = {multi:false};
 
@@ -101,7 +102,8 @@ router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(re
                     col: req.body['col'],
                     index: req.body['index'],
                     info: req.body['info'],
-                    latest_price: {price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']}
+                    latest_price: {price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']},
+                    classified_price:req.body['classified_price']
                 },
                 $addToSet: {
                     prices: {price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']}
@@ -131,7 +133,9 @@ router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(re
                     row: req.body['row'],
                     col: req.body['col'],
                     index: req.body['index'],
-                    info: req.body['info']
+                    info: req.body['info'],
+                    latest_price: {price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']},
+                    classified_price:req.body['classified_price']
                 }
             };
 

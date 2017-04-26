@@ -98,15 +98,13 @@ router.get('/', function(req, res){
     res.render('index', {user: req.user});
 });
 
-router.get('/search', acl.checkPermission('medicine', 'view'), function(req, res){
+router.get('/search', function(req, res){
     let results = [];
     let compositions = [];
     let query = req.query.keyword.match(/[^ ]+/g);
     let counter = 0;
     query.forEach((q) => {
         "use strict";
-
-
         Medicine.find({name:new RegExp(q, 'i')}, function(err, meds){
             if(err){
                 req.flash('err', 'No such medicine!');
@@ -135,8 +133,6 @@ router.get('/search', acl.checkPermission('medicine', 'view'), function(req, res
                         compositions: compositions,
                         query: req.query.keyword });
                 }
-
-
             });
         })
     });
