@@ -10,7 +10,6 @@ var util = require('util');
 const path = require('path');
 /* GET users listing. */
 router.get('/', acl.checkPermission('medicine', 'view'), function(req, res, next) {
-    console.log('root:'+ process.env._ROOTPATH)
     Medicine.find(function(err, medicines){
        if(err){
            return next(err);
@@ -31,9 +30,12 @@ router.get('/:name', acl.checkPermission('medicine', 'view'), function(req, res,
             console.log('no this medicine ' + req.params.name + ' found');
             return res.redirect('/');
         }
+        res.render('medicine/medinfo', {user:'dev', medicine: medicine, today: new Date().toISOString().substring(0, 10)});
 
         //update the latest_price field
+        /*
         var latest_price = medicine.prices[0];
+
         medicine.prices.forEach(function(priceData){
             if (priceData.timestamp > latest_price.timestamp) latest_price = priceData;
         });
@@ -54,7 +56,7 @@ router.get('/:name', acl.checkPermission('medicine', 'view'), function(req, res,
                 }
             }
         }
-        res.render('medicine/medinfo', {user:'dev', medicine: medicine, today: new Date().toISOString().substring(0, 10)});
+         */
     })
 });
 
@@ -76,23 +78,31 @@ router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(re
 
     var conditions = {
             name: req.params.name
-        }, update = {$set:{
-            name: req.body['name'],
-            position: req.body['position'],
-            row: req.body['row'],
-            col: req.body['col'],
-            index: req.body['index'],
-            classified_price:req.body['classified_price'],
-            info: req.body['info']}, $addToSet:{prices: {price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']}}},
-        options = {multi:false};
+        }, update = {
+            $set:
+            {
+                name: req.body['name'],
+                position: req.body['position'],
+                row: req.body['row'],
+                col: req.body['col'],
+                index: req.body['index'],
+                latest_price: {price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']},
+                classified_price:req.body['classified_price'],
+                info: req.body['info']
+            },
+            $addToSet:
+            {
+                prices: {price: req.body['price'], unit: req.body['unit'], timestamp: req.body['date']}}
+            },
+            options = {multi:false};
 
 
-    Medicine.findOne({name: req.params.name}, function(err, medicine) {
+    Medicine.findOne({name: req.params.name, col: req.body['col'], row: req.body['row']}, function(err, medicine) {
         if (!medicine) {
             console.log('no ' + req.params.name + ' found');
             return res.redirect('/');
         }
-
+        /*
         if (typeof(medicine.latest_price.timestamp) ==='undefined' || medicine.latest_price.timestamp < new Date(req.body['date'])){
             update = {
                 $set: {
@@ -110,6 +120,7 @@ router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(re
                 }
             }
         }
+        */
 
         if(util.isArray(medicine.prices)) {
 
@@ -177,7 +188,6 @@ router.post('/addmed', function(req, res){
     });
 
     //todo: get medicine info from website using crawler
-    console.log(newMed);
 
     newMed.save(function(err){
         if(err) throw err;
