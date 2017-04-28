@@ -3,7 +3,7 @@
 <div id="main">
     <a class="btn btn-default" href="/composition/add">Add new composition</a>
     <% compositions.forEach(composition => { %>
-    <a href="/composition/<%- composition.name %>"><h4><%- composition.name %></h4></a>
+    <a class="item-name" href="/composition/<%- composition.name %>"><h4><%- composition.name %></h4></a>
     <% }) %>
 </div>
 

@@ -9,13 +9,13 @@
 <p>無相似結果</p>
 <% } %>
 <% medicines.forEach(function(medicine){ %>
-<p><a href='/medicine/<%= medicine.name %>'><%= medicine.name %></a></p>
+<p><a class="item-name" href='/medicine/<%= medicine.name %>'><%= medicine.name %></a></p>
 <p class="brief-intro"><%= medicine.intro %></p>
 <hr>
 <% }) %>
 
 <% compositions.forEach((composition) => { %>
-<p><a href="/composition/<%= composition.name %>"><%= composition.name %></a></p>
+<p><a class="item-name" href="/composition/<%= composition.name %>"><%= composition.name %></a></p>
 <p class="brief-intro"><%= composition.intro %></p>
 <p class="brief-intro">成分:<% composition.ingredients.forEach((item) => { %>
     <%= item.name %>
