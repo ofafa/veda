@@ -3,10 +3,11 @@
 <form method="post" action="/medicine/edit/<%= medicine.name %>">
 <p>Name: <input type="text" name="name" value=<%= medicine.name %>></p>
 <p>
-    <% if(medicine.latest_price != null) {  %>
+    <% console.log(medicine.latest_price.constructor) %>
+    <% if(medicine.latest_price != undefined) {  %>
         Latest Price: <input type="number" name="price" value=<%= medicine.latest_price.price %>>
     <% } else {  %>
-        Latest Price: <input type="number" name="price" value=<%= medicine.prices[0].price %>>
+        Latest Price: <input type="number" name="price" value=<%= medicine.prices[medicine.prices.length-1].price %>>
     <% } %>
     <select id="unit" name="unit">
         <%if(medicine.latest_price.unit == 'catty') { %>
