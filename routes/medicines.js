@@ -14,13 +14,13 @@ router.get('/', acl.checkPermission('medicine', 'view'), function(req, res, next
        if(err){
            return next(err);
        }
-       res.render('medicine/medicine', {user:'dev', medicines: medicines});
+       res.render('medicine/medicine', {user: req.user, medicines: medicines});
     });
     //res.render('medicine', {user:'dev'});
 });
 
 router.get('/addmed', acl.checkPermission('medicine', 'edit'), function(req, res, next){
-    res.render('medicine/addmed', {user:'dev', today: new Date().toISOString().substring(0, 10)});
+    res.render('medicine/addmed', {user: req.user, today: new Date().toISOString().substring(0, 10)});
 });
 
 
@@ -30,7 +30,7 @@ router.get('/:name', acl.checkPermission('medicine', 'view'), function(req, res,
             console.log('no this medicine ' + req.params.name + ' found');
             return res.redirect('/');
         }
-        res.render('medicine/medinfo', {user:'dev', medicine: medicine, today: new Date().toISOString().substring(0, 10)});
+        res.render('medicine/medinfo', {user: req.user, medicine: medicine, today: new Date().toISOString().substring(0, 10)});
 
         //update the latest_price field
         /*
@@ -68,7 +68,7 @@ router.get('/edit/:name', acl.checkPermission('medicine', 'view'), function(req,
            console.log('no this medicine ' + req.params.name + ' found');
            return res.redirect('/');
        }
-       res.render('editmed', {user:'dev', medicine: medicine});
+       res.render('editmed', {user: req.user, medicine: medicine});
    })
 });
 
@@ -171,7 +171,7 @@ router.post('/edit/:name', acl.checkPermission('medicine', 'edit'),  function(re
 
 //Create new medicine
 router.get('/addmed', function(req, res){
-    res.render('addmed', {user:'dev'});
+    res.render('addmed', {user:req.user});
 });
 
 router.post('/addmed', function(req, res){

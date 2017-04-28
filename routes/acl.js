@@ -11,9 +11,10 @@ router.get('/', acl.checkPermission('acl', 'view'), function(req, res){
 
 
     //get the email of local users
-    user.user.find({$or:[{local:{$exists:true}}, {facebook:{$exists:true}}]}, function(err, users){
+    user.user.find({$or:[{local:{$exists:true}}, {facebook:{$exists:true}}]},
+        {"local.email":1, "facebook.email":1, "facebook.name":1}, function(err, users){
         res.render('acl', {user:'dev', users: users});
-    }).select('local.email');
+    });
 
 
 

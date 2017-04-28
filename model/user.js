@@ -42,11 +42,20 @@ var userSchema = new Schema({
         role: String,
         address: {zip: String, street: String, state: String, country: String},
         birthday: Date,
-        recipe: {recipeName: String, timestamp: Date},
-        note: String,
+        compo_history: {recipeName: String, timestamp: Date},
         created_at:Date,
         updated_at:Date
+    },
+
+    preference:{
+        vertical_disp: Boolean
+    },
+
+    behavior:{
+        comments: [{comment: String, timestamp: Date}],
+        queries: [{content: String, timestamp: Date}]
     }
+
 }, {timestamps: true});
 
 //===Methods===

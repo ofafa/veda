@@ -50,13 +50,14 @@ if(process.env.REDISTOGO_URL){
 else{
     redis_client = redis.createClient('6379', 'localhost');
 }
-
+const ONE_MONTH = 60*60*24*30*1000;
 //required for passport
 app.use(expressSession({
     store: new redisStore({client:redis_client}),
     secret:process.env.PASSPORT_SECRET,
     cookie: {
-    maxAge: process.env.SESSION_LIFE
+        expires: new Date(Date.now() + ONE_MONTH),
+        maxAge: ONE_MONTH
   }}));
 app.use(passport.initialize());
 app.use(passport.session());

@@ -11,7 +11,7 @@ router.get('/', acl.checkPermission('medicine', 'view'), (req, res) => {
     //list all compositions
     Composition.find((err, compositions) => {
         "use strict";
-        res.render('composition/compositions', {user:'dev', compositions: compositions});
+        res.render('composition/compositions', {user:req.user, compositions: compositions});
     })
 
 });
@@ -19,7 +19,7 @@ router.get('/', acl.checkPermission('medicine', 'view'), (req, res) => {
 
 router.get('/add', acl.checkPermission('medicine', 'edit'), (req, res) => {
     //add a composition
-    res.render('composition/addComposition', {user:'dev'});
+    res.render('composition/addComposition', {user: req.user});
 });
 
 router.post('/add', acl.checkPermission('medicine', 'edit'), (req, res) => {
@@ -65,7 +65,7 @@ router.get('/:name',acl.checkPermission('medicine', 'view'), (req, res) =>{
     Composition.findOne({name: req.params.name}, (err, composition) => {
         if(!composition)
             return res.redirect('/');
-        res.render('composition/compoInfo', {user: 'dev', composition: composition});
+        res.render('composition/compoInfo', {user:  req.user, composition: composition});
     });
 
 });
@@ -75,7 +75,7 @@ router.get('/edit/:name', acl.checkPermission('medicine', 'edit'), (req, res) =>
     Composition.findOne({name: req.params.name}, (err, composition) => {
         if(!composition)
             return res.redirect('/');
-        res.render('composition/editComposition', {user:'dev', composition: composition, today: new Date().toISOString().substring(0, 10)});
+        res.render('composition/editComposition', {user: req.user, composition: composition, today: new Date().toISOString().substring(0, 10)});
     })
 });
 

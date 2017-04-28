@@ -1,7 +1,7 @@
 <%- include ../header %>
 <body>
 <div id="main">
-    <a href="/composition/add">Add new composition</a>
+    <a class="btn btn-default" href="/composition/add">Add new composition</a>
     <% compositions.forEach(composition => { %>
     <a href="/composition/<%- composition.name %>"><h4><%- composition.name %></h4></a>
     <% }) %>

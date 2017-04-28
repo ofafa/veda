@@ -1,11 +1,41 @@
 <%- include header %>
 <h3>User list</h3>
-<div>
-    <table>
-        <th>Name</th><th>Role</th>
-        <% users.forEach(function(user, index){ %>
-        <p><%- user.local.email %><br/></p>
-        <%  }); %>
-    </table>
+<div class="form-group-lg">
+    <div class="col-xs-4">
+        <label for="email">Email</label>
+    </div>
+    <div class="col-xs-2">
+        <label for="rol">Role</label>
+    </div>
+    <div class="col-xs-3">
+        <label for="name">Name</label>
+    </div>
 
+    <% users.forEach((user) => { %>
+     <div class="container-fluid">
+         <div class="row">
+            <div class="col-xs-4">
+                <% if(user.local != '{}') { %>
+                    <a href="/user/<%= user._id %>"><%= user.local.email %></a>
+                <% } else if (user.facebook) { %>
+                    <a href="/user/<%= user._id %>"><%= user.facebook.email %></a>
+                <% } %>
+            </div>
+            <div class="col-xs-2">
+                <select>
+                    <option>Admin</option>
+                    <option>Employee</option>
+                    <option>Guest</option>
+                </select>
+            </div>
+            <div class="col-xs-4">
+                <% if(user.local != '{}') { %>
+                <a href="/user/<%= user._id %>"><%= user.local.name %></a>
+                <% } else if (user.facebook) { %>
+                <a href="/user/<%= user._id %>"><%= user.facebook.name %></a>
+                <% } %>
+            </div>
+         </div>
+     </div>
+    <% }) %>
 </div>

@@ -1,6 +1,7 @@
 <!-- views/profile.ejs -->
 <%- include header %>
 <body>
+<form method="post" action="users/edit/<%= user.id %>">
 <div class="container">
 
     <div class="page-header text-center">
@@ -9,23 +10,50 @@
     </div>
 
     <div class="row">
-
+        <% if (user.facebook) { %>
         <!-- FACEBOOK INFORMATION -->
         <div class="col-sm-6">
             <div class="well">
                 <h3 class="text-primary"><span class="fa fa-facebook"></span> Facebook</h3>
 
                 <p>
-                    <strong>id</strong>: <%= user.facebook.id %><br>
                     <strong>name</strong>: <%= user.facebook.name %><br>
                     <strong>email</strong>: <%= user.facebook.email %>
                 </p>
 
             </div>
         </div>
+        <% } %>
+        <div class="col-sm-6">
+            <div class="well">
+                <h3 class="text-primary">Preference</h3>
+                <p>Vertical Compos</p>
+                <label class="switch">
+                    <input type="checkbox" name="compos_display_pref" <% if(user.preference.vertical_disp) { %> checked <% } %>>
+                    <div class="slider round"></div>
+                </label>
+                <br/>
+            </div>
 
+        </div>
     </div>
 
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="well">
+                <h3 class="text-primary">About Me</h3>
+                Name:<input class="form-control" type="text" name="user_name" value=<%= user.profile.name %>><br/>
+                Phone:<input class="form-control" type="text" name="user_phone" value="<%= user.profile.phone %>">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="text-center">
+            <input type="submit" class="btn btn-success" name="save_preference" value="save">
+        </div>
+    </div>
 </div>
+</form>
 </body>
 </html>
