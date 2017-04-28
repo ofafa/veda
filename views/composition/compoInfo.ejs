@@ -4,7 +4,7 @@
     <a style="font-size:1.5em" href="/composition/edit/<%- composition.name %>" class="btn btn-warning">Edit</a>
     <div style="border: solid; height: 80%">
         <% let padding = 20 - composition.ingredients.length %>
-        <p style="-webkit-writing-mode: vertical-rl; padding-left:<%= padding %>em; padding-top:1em; padding-bottom: 1em">
+        <p style=<% if (user.preference.vertical_disp) { %>"-webkit-writing-mode: vertical-rl; padding-left:<%= padding %>em; padding-top:1em; padding-bottom: 1em"<% } %>>
         <%composition.ingredients.forEach(item => { %>
 
                 <span style="font-size:4em"><a href="../medicine/<%- item.name %>"><%- item.name %></a></span>
