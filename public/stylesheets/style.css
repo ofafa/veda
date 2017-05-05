@@ -10,6 +10,7 @@ a {
 .box{writing-mode: vertical-rl}
 
 
+
 .tt-query {
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -51,8 +52,19 @@ a {
 }
 
 .brief-intro {
-    font-size: 0.5em;
+    font-size: 1em;
 }
+
+
+.item-name{
+    font-size:2em;
+}
+
+.user-input{
+    line-height: 2em;
+}
+
+.twitter-typeahead{ float:left; width:100%}
 
 
 /* The switch - the box around the slider */
@@ -112,8 +124,4 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
-}
-
-.item-name{
-    font-size:2em;
 }
