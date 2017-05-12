@@ -302,18 +302,26 @@ export default class Composition extends React.Component {
                         <div name="dynamicInput">
                             {this.state.inputs.map(input => {
                                 return (
-                                    <div name={input.id}>
-                                        <input name="item-name" className="typeahead" autocomplete="off" ref={`${input.id}_name`} type="text" id={`${input.id}_name`} key={`${input.id}_name`} placeholder="item" value={input.name} onChange={this.handleItemChange.bind(this, input.id)}/>
-                                        <input name="item-q" type="number" id={`${input.id}_q`} key={`${input.id}_q`} value={input.q} onChange={this.handleQuantityChange.bind(this, input.id)}/>
-                                        <select name="item-unit" id={`${input.id}_unit`} key={`${input.id}_unit`} value={input.unit} onChange={this.handleUnitChange.bind(this, input.id)}>
-                                            <option value="catty">catty斤</option>
-                                            <option value="tael">tael兩</option>
-                                            <option value="piece">piece個</option>
-                                            <option value="mace">mace錢</option>
-                                            <option value="g">g</option>
-                                            <option value="kg">kg</option>
-                                        </select>
-                                        <br/>
+                                    <div className="row">
+                                        <div className="input-group col-xs-4" name={input.id} >
+                                            <span className="input-group-addon">
+                                                <input name="item-name" className="typeahead" autocomplete="off" ref={`${input.id}_name`} type="text" id={`${input.id}_name`} key={`${input.id}_name`} placeholder="item" value={input.name} onChange={this.handleItemChange.bind(this, input.id)}/>
+                                            </span>
+                                            <span className="input-group-addon">
+                                                <input name="item-q" type="number" id={`${input.id}_q`} key={`${input.id}_q`} value={input.q} onChange={this.handleQuantityChange.bind(this, input.id)}/>
+                                            </span>
+                                            <span className="input-group-addon">
+                                                <select name="item-unit" id={`${input.id}_unit`} key={`${input.id}_unit`} value={input.unit} onChange={this.handleUnitChange.bind(this, input.id)}>
+                                                <option value="catty">catty斤</option>
+                                                <option value="tael">tael兩</option>
+                                                <option value="piece">piece個</option>
+                                                <option value="mace">mace錢</option>
+                                                <option value="g">g</option>
+                                                <option value="kg">kg</option>
+                                                </select>
+                                            </span>
+                                            <br/>
+                                        </div>
                                     </div>
                                 )
                             })}
