@@ -18,7 +18,7 @@ mongoose.connection.on('connected', function(error){
 //test ACL
 function initPermissions(err){
     acl.allow('guest', ['medicine', 'users'], ['view']);
-    acl.allow('employee', ['medicine', 'users'], ['view']);
+    acl.allow('employee', ['medicine', 'users'], ['view', 'edit']);
     acl.allow('admin', ['medicine', 'users', 'acl'], ['view', 'edit']);
 }
 
@@ -31,7 +31,7 @@ function initRoles(err){
         }
     });
     acl.addUserRoles(process.env.ADMIN_ID, 'admin');
-
+    acl.addUserRoles(process.env.EMPLOYEE_ID, 'employee')
 }
 
 
