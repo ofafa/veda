@@ -104,11 +104,13 @@ module.exports = function(passport){
                     return done(null, user);
                 } else {
                     var newUser = new User();
-                    console.log(profile);
+                    //console.log(profile);
                     newUser.facebook.id = profile.id;
                     newUser.facebook.token  = token;
                     newUser.facebook.name = profile.displayName;
-                    newUser.facebook.email = profile.emails[0].value;
+                    if(profile.emails){
+                        newUser.facebook.email = profile.emails[0].value;
+                    }
                     //save user to db
                     newUser.save(function(err){
                         if (err) throw err;
